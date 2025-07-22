@@ -145,6 +145,64 @@ Use this template:\n\n${template}`;
   isConfigured(): boolean {
     return !!this.apiKey;
   }
+
+  /**
+   * Test OpenAI API connection and key validity
+   */
+  async testConnection(apiKey?: string): Promise<{ success: boolean; error?: string; info?: { model: string; usage: string } }> {
+    try {
+      // Use provided API key or current config key
+      const testKey = apiKey || this.apiKey;
+      
+      if (!testKey) {
+        throw new Error('No OpenAI API key provided');
+      }
+
+      // Make a minimal API call to test the key
+      const response = await fetch(this.endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${testKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [{ role: 'user', content: 'Hello' }],
+          max_tokens: 5,
+          temperature: 0
+        })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        if (response.status === 401) {
+          throw new Error('Invalid OpenAI API key');
+        }
+        if (response.status === 429) {
+          throw new Error('OpenAI API rate limit exceeded');
+        }
+        if (response.status === 402) {
+          throw new Error('OpenAI API quota exceeded - please check your billing');
+        }
+        throw new Error(`OpenAI API error: ${errorData.error?.message || response.statusText}`);
+      }
+
+      const data = await response.json();
+      
+      return {
+        success: true,
+        info: {
+          model: data.model || 'gpt-3.5-turbo',
+          usage: `${data.usage?.total_tokens || 0} tokens used`
+        }
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Connection test failed'
+      };
+    }
+  }
 }
 
 // Export singleton instance

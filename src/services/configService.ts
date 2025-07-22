@@ -67,7 +67,7 @@ export class ConfigService {
   /**
    * Validate configuration object
    */
-  static validate(config: Partial<UserConfig>): { isValid: boolean; errors: string[] } {
+  static validate(config: Partial<UserConfig>, requireLabels: boolean = true): { isValid: boolean; errors: string[] } {
     const errors: string[] = [];
     
     // GitHub validation
@@ -85,17 +85,19 @@ export class ConfigService {
       errors.push('GitHub token appears to be invalid format');
     }
     
-    // Label validation
-    if (!config.labels?.priority?.high?.trim()) {
-      errors.push('High priority label is required');
-    }
-    
-    if (!config.labels?.priority?.medium?.trim()) {
-      errors.push('Medium priority label is required');
-    }
-    
-    if (!config.labels?.priority?.low?.trim()) {
-      errors.push('Low priority label is required');
+    // Label validation (optional)
+    if (requireLabels) {
+      if (!config.labels?.priority?.high?.trim()) {
+        errors.push('High priority label is required');
+      }
+      
+      if (!config.labels?.priority?.medium?.trim()) {
+        errors.push('Medium priority label is required');
+      }
+      
+      if (!config.labels?.priority?.low?.trim()) {
+        errors.push('Low priority label is required');
+      }
     }
     
     return {

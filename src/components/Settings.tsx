@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { UserConfig, EXAMPLE_CONFIGS } from '../config/userConfig';
 import { ConfigService } from '../services/configService';
 import { githubService } from '../services/github';
+import { slackApiService } from '../services/slackApi';
+import { aiService } from '../services/aiService';
 import { Save, Download, Upload, RotateCcw, Check, X, AlertTriangle, Github, MessageSquare, Bot, ExternalLink, Info, HelpCircle, ChevronDown, Tag } from 'lucide-react';
 
 interface GitHubLabel {
@@ -22,6 +24,14 @@ const Settings: React.FC = () => {
   const [availableLabels, setAvailableLabels] = useState<GitHubLabel[]>([]);
   const [labelsLoading, setLabelsLoading] = useState(false);
   const [labelsError, setLabelsError] = useState<string | null>(null);
+
+  // Test states
+  const [githubTestState, setGitHubTestState] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
+  const [githubTestResult, setGitHubTestResult] = useState<string>('');
+  const [slackTestState, setSlackTestState] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
+  const [slackTestResult, setSlackTestResult] = useState<string>('');
+  const [openaiTestState, setOpenAITestState] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
+  const [openaiTestResult, setOpenAITestResult] = useState<string>('');
   
   useEffect(() => {
     const original = ConfigService.load();
@@ -58,7 +68,11 @@ const Settings: React.FC = () => {
   };
 
   const handleSave = () => {
-    const validation = ConfigService.validate(config);
+    // Allow saving GitHub credentials without requiring priority labels
+    const hasGitHubCredentials = config.github.owner && config.github.repo && config.github.token;
+    const hasPriorityLabels = config.labels.priority.high && config.labels.priority.medium && config.labels.priority.low;
+    
+    const validation = ConfigService.validate(config, hasPriorityLabels);
     setValidationErrors(validation.errors);
     
     if (!validation.isValid) {
@@ -164,7 +178,10 @@ const Settings: React.FC = () => {
         </button>
         
         {isOpen && !disabled && (
-          <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+          <div 
+            className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="p-2">
               <input
                 type="text"
@@ -287,7 +304,10 @@ const Settings: React.FC = () => {
         </div>
         
         {isOpen && !disabled && (
-          <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto">
+          <div 
+            className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="p-2 border-b border-gray-200">
               <div className="flex gap-1">
                 <input
@@ -295,8 +315,19 @@ const Settings: React.FC = () => {
                   placeholder="Search labels or add custom..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
+                  onClick={(e) => e.stopPropagation()}
                   className="flex-1 px-2 py-1 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
                   onKeyDown={(e) => {
+                    if (e.key === 'Escape') {
+                      if (searchTerm.trim()) {
+                        // Clear search first if there's text
+                        setSearchTerm('');
+                      } else {
+                        // Close dropdown only if search is empty
+                        setIsOpen(false);
+                      }
+                      return;
+                    }
                     if (e.key === 'Enter') {
                       e.preventDefault();
                       addCustomLabel();
@@ -357,6 +388,88 @@ const Settings: React.FC = () => {
         )}
       </div>
     );
+  };
+
+  // Test functions
+  const testGitHubConnection = async () => {
+    if (!config.github.owner || !config.github.repo || !config.github.token) {
+      setGitHubTestState('error');
+      setGitHubTestResult('Please fill in all GitHub fields before testing');
+      return;
+    }
+
+    setGitHubTestState('testing');
+    setGitHubTestResult('');
+
+    const result = await githubService.testConnection(config.github.owner, config.github.repo, config.github.token);
+    
+    if (result.success) {
+      setGitHubTestState('success');
+      setGitHubTestResult(`✓ Connected successfully as ${result.user}`);
+    } else {
+      setGitHubTestState('error');
+      setGitHubTestResult(`✗ ${result.error}`);
+    }
+
+    // Reset after 5 seconds
+    setTimeout(() => {
+      setGitHubTestState('idle');
+      setGitHubTestResult('');
+    }, 5000);
+  };
+
+  const testSlackConnection = async () => {
+    if (!config.slack?.botToken) {
+      setSlackTestState('error');
+      setSlackTestResult('Please provide a Slack bot token before testing');
+      return;
+    }
+
+    setSlackTestState('testing');
+    setSlackTestResult('');
+
+    const result = await slackApiService.testConnection(config.slack.botToken);
+    
+    if (result.success) {
+      setSlackTestState('success');
+      setSlackTestResult(`✓ Connected successfully to ${result.info?.teamName} as ${result.info?.botName}`);
+    } else {
+      setSlackTestState('error');
+      setSlackTestResult(`✗ ${result.error}`);
+    }
+
+    // Reset after 5 seconds
+    setTimeout(() => {
+      setSlackTestState('idle');
+      setSlackTestResult('');
+    }, 5000);
+  };
+
+  const testOpenAIConnection = async () => {
+    if (!config.openai?.apiKey) {
+      setOpenAITestState('error');
+      setOpenAITestResult('Please provide an OpenAI API key before testing');
+      return;
+    }
+
+    setOpenAITestState('testing');
+    setOpenAITestResult('');
+
+    const result = await aiService.testConnection(config.openai.apiKey);
+    
+    if (result.success) {
+      setOpenAITestState('success');
+      setOpenAITestResult(`✓ Connected successfully - ${result.info?.model} (${result.info?.usage})`);
+    } else {
+      setOpenAITestState('error');
+      setOpenAITestResult(`✗ ${result.error}`);
+    }
+
+    // Reset after 5 seconds
+    setTimeout(() => {
+      setOpenAITestState('idle');
+      setOpenAITestResult('');
+    }, 5000);
   };
 
   return (
@@ -491,6 +604,31 @@ const Settings: React.FC = () => {
             onChange={(e) => setConfig({...config, github: {...config.github, token: e.target.value}})}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           />
+          
+          {/* Test GitHub Connection */}
+          <div className="mt-2 flex items-center gap-2">
+            <button
+              onClick={testGitHubConnection}
+              disabled={githubTestState === 'testing' || !config.github.owner || !config.github.repo || !config.github.token}
+              className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {githubTestState === 'testing' ? (
+                <div className="animate-spin rounded-full h-3 w-3 border-t-2 border-gray-600"></div>
+              ) : githubTestState === 'success' ? (
+                <Check className="w-3 h-3 text-green-600" />
+              ) : githubTestState === 'error' ? (
+                <X className="w-3 h-3 text-red-600" />
+              ) : (
+                <ExternalLink className="w-3 h-3" />
+              )}
+              {githubTestState === 'testing' ? 'Testing...' : 'Test Connection'}
+            </button>
+            {githubTestResult && (
+              <span className={`text-xs ${githubTestState === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                {githubTestResult}
+              </span>
+            )}
+          </div>
           
           {/* GitHub Token Help Section */}
           <div className="mt-4">
@@ -705,6 +843,31 @@ const Settings: React.FC = () => {
                 />
                 <p className="text-sm text-gray-600 mt-1">Enables Slack thread previews with AI summaries when you hover over Slack links in issues</p>
                 
+                {/* Test Slack Connection */}
+                <div className="mt-2 flex items-center gap-2">
+                  <button
+                    onClick={testSlackConnection}
+                    disabled={slackTestState === 'testing' || !config.slack?.botToken}
+                    className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {slackTestState === 'testing' ? (
+                      <div className="animate-spin rounded-full h-3 w-3 border-t-2 border-gray-600"></div>
+                    ) : slackTestState === 'success' ? (
+                      <Check className="w-3 h-3 text-green-600" />
+                    ) : slackTestState === 'error' ? (
+                      <X className="w-3 h-3 text-red-600" />
+                    ) : (
+                      <ExternalLink className="w-3 h-3" />
+                    )}
+                    {slackTestState === 'testing' ? 'Testing...' : 'Test Connection'}
+                  </button>
+                  {slackTestResult && (
+                    <span className={`text-xs ${slackTestState === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                      {slackTestResult}
+                    </span>
+                  )}
+                </div>
+                
                 {/* Slack Token Help Section */}
                 <div className="mt-4">
                   <button
@@ -811,6 +974,31 @@ const Settings: React.FC = () => {
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <p className="text-sm text-gray-600 mt-1">Enables AI-powered issue formatting, rewriting, and Slack thread summaries</p>
+              
+              {/* Test OpenAI Connection */}
+              <div className="mt-2 flex items-center gap-2">
+                <button
+                  onClick={testOpenAIConnection}
+                  disabled={openaiTestState === 'testing' || !config.openai?.apiKey}
+                  className="flex items-center gap-2 px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-md hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  {openaiTestState === 'testing' ? (
+                    <div className="animate-spin rounded-full h-3 w-3 border-t-2 border-gray-600"></div>
+                  ) : openaiTestState === 'success' ? (
+                    <Check className="w-3 h-3 text-green-600" />
+                  ) : openaiTestState === 'error' ? (
+                    <X className="w-3 h-3 text-red-600" />
+                  ) : (
+                    <ExternalLink className="w-3 h-3" />
+                  )}
+                  {openaiTestState === 'testing' ? 'Testing...' : 'Test Connection'}
+                </button>
+                {openaiTestResult && (
+                  <span className={`text-xs ${openaiTestState === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+                    {openaiTestResult}
+                  </span>
+                )}
+              </div>
               
               {/* OpenAI API Key Help Section */}
               <div className="mt-4">

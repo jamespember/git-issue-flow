@@ -185,6 +185,48 @@ class GitHubService {
       body: JSON.stringify(patchBody),
     });
   }
+
+  async testConnection(owner: string, repo: string, token?: string): Promise<{ success: boolean; error?: string; user?: string }> {
+    try {
+      // Use provided token or current config token
+      const testToken = token || this.token;
+      if (!testToken) {
+        throw new Error('No GitHub token provided');
+      }
+
+      // Test with a simple API call to get repository info
+      const headers = {
+        'Authorization': `Bearer ${testToken}`,
+        'Accept': 'application/vnd.github.v3+json',
+      };
+
+      const repoResponse = await fetch(`${GITHUB_API_URL}/repos/${owner}/${repo}`, { headers });
+      
+      if (!repoResponse.ok) {
+        if (repoResponse.status === 401) {
+          throw new Error('Invalid token or insufficient permissions');
+        }
+        if (repoResponse.status === 404) {
+          throw new Error('Repository not found or no access');
+        }
+        throw new Error(`API error: ${repoResponse.statusText}`);
+      }
+
+      // Also get user info to show who the token belongs to
+      const userResponse = await fetch(`${GITHUB_API_URL}/user`, { headers });
+      const userData = userResponse.ok ? await userResponse.json() : null;
+
+      return { 
+        success: true, 
+        user: userData?.login || 'Unknown user'
+      };
+    } catch (error) {
+      return { 
+        success: false, 
+        error: error instanceof Error ? error.message : 'Connection test failed' 
+      };
+    }
+  }
 }
 
 export const githubService = new GitHubService(); 

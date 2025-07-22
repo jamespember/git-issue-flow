@@ -206,6 +206,61 @@ export class SlackApiService {
       .replace(/`([^`]+)`/g, '`$1`') // Keep code formatting
       .replace(/```([^`]+)```/g, '```$1```'); // Keep code blocks
   }
+
+  /**
+   * Test Slack connection and token validity
+   */
+  async testConnection(token?: string): Promise<{ success: boolean; error?: string; info?: { teamName: string; botName: string } }> {
+    try {
+      // Use provided token or current config token
+      const config = ConfigService.load();
+      const testToken = token || config.slack?.botToken;
+      
+      if (!testToken) {
+        throw new Error('No Slack bot token provided');
+      }
+
+      // Check if proxy is running
+      const response = await fetch('http://localhost:3001/api/slack-proxy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          endpoint: 'auth.test',
+          token: testToken,
+          body: {}
+        })
+      });
+
+      if (!response.ok) {
+        if (response.status === 502 || response.status === 503) {
+          throw new Error('Slack proxy is not running. Please run: node slack-proxy.cjs');
+        }
+        throw new Error(`Slack proxy error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (!data.ok) {
+        if (data.error === 'invalid_auth') {
+          throw new Error('Invalid Slack bot token');
+        }
+        throw new Error(`Slack API error: ${data.error || 'Unknown error'}`);
+      }
+
+      return {
+        success: true,
+        info: {
+          teamName: data.team,
+          botName: data.user
+        }
+      };
+    } catch (error) {
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : 'Connection test failed'
+      };
+    }
+  }
 }
 
 export const slackApiService = new SlackApiService(); 
