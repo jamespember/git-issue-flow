@@ -78,7 +78,6 @@ const CommandK: React.FC<CommandKProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
-  const config = ConfigService.load();
   const isConfigured = ConfigService.isConfigured();
 
   return (

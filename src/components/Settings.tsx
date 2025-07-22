@@ -69,7 +69,6 @@ const Settings: React.FC = () => {
 
   const handleSave = () => {
     // Allow saving GitHub credentials without requiring priority labels
-    const hasGitHubCredentials = config.github.owner && config.github.repo && config.github.token;
     const hasPriorityLabels = config.labels.priority.high && config.labels.priority.medium && config.labels.priority.low;
     
     const validation = ConfigService.validate(config, hasPriorityLabels);
@@ -129,7 +128,7 @@ const Settings: React.FC = () => {
         } else {
           alert(`Import failed: ${result.error}`);
         }
-      } catch (error) {
+      } catch {
         alert('Failed to import configuration file.');
       }
     };

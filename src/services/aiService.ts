@@ -72,7 +72,7 @@ ${hasSlackContext ? '## Context from Slack thread\n\n' : ''}## Links`;
    * Formats a GitHub issue description using OpenAI GPT-4
    * Preserves Slack URLs and context sections
    */
-  async formatIssueWithAI(issueText: string, options: FormatIssueOptions = {}): Promise<string> {
+  async formatIssueWithAI(issueText: string): Promise<string> {
     if (!this.apiKey) {
       throw new Error('OpenAI API key not configured');
     }

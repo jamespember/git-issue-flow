@@ -4,7 +4,8 @@ import { GitHubIssue } from '../types/github';
 import MarkdownEditor from './MarkdownEditor';
 import MarkdownPreview from './MarkdownPreview';
 import LabelManager from './LabelManager';
-import { ChevronLeft, ChevronRight, ChevronDown, Check, Clock, Calendar, X } from 'lucide-react';
+import SlackThreadPreview from './SlackThreadPreview';
+import { ChevronLeft, ChevronRight, ChevronDown, Check, Clock, Calendar, X, MessageSquare } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 import { aiService } from '../services/aiService';
 import { ConfigService } from '../services/configService';
@@ -35,6 +36,8 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
   const [rewriteResult, setRewriteResult] = useState('');
   const [rewriteLoading, setRewriteLoading] = useState(false);
   const [refreshStatus, setRefreshStatus] = useState<'idle' | 'refreshing' | 'completed'>('idle');
+  const [showSlackPreview, setShowSlackPreview] = useState(false);
+  const [currentSlackUrl, setCurrentSlackUrl] = useState<string>('');
   
   const { nextIssue, prevIssue, setPriority, issues, currentIssueIndex, closeIssueAsNotPlanned, refreshIssues } = useAppStore();
   const updateTitle = useAppStore(s => s.updateIssueTitle);
@@ -293,7 +296,8 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
   const openFirstSlackLink = () => {
     const slackUrls = getSlackUrls();
     if (slackUrls.length > 0) {
-      window.open(slackUrls[0], '_blank');
+      setCurrentSlackUrl(slackUrls[0]);
+      setShowSlackPreview(true);
     }
   };
   
@@ -343,6 +347,15 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
             <div className="flex items-center gap-1 px-2 py-1 rounded bg-green-100 text-green-800 text-xs">
               <Check className="w-3 h-3" />
               Refreshed
+            </div>
+          )}
+          
+          {/* Slack Links Indicator */}
+          {getSlackUrls().length > 0 && (
+            <div className="flex items-center gap-1 px-2 py-1 rounded bg-purple-100 text-purple-800 text-xs border border-purple-200">
+              <MessageSquare className="w-3 h-3" />
+              <span>{getSlackUrls().length} Slack link{getSlackUrls().length > 1 ? 's' : ''}</span>
+              <span className="ml-1 px-1 py-0.5 text-xs bg-purple-200 text-purple-900 rounded font-mono">Ctrl+Shift+S</span>
             </div>
           )}
           
@@ -659,7 +672,9 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
               <li><kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-gray-800">Ctrl + L</kbd> Set low priority</li>
               <li><kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-gray-800">Ctrl + X</kbd> Close as not planned</li>
               <li><kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-gray-800">Ctrl + Shift + R</kbd> Refresh all issues</li>
-              <li><kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-gray-800">Ctrl + Shift + S</kbd> Open Slack link</li>
+              {getSlackUrls().length > 0 && (
+                <li><kbd className="px-1.5 py-0.5 rounded bg-white dark:bg-gray-800">Ctrl + Shift + S</kbd> <span className="text-purple-600">Preview Slack thread</span></li>
+              )}
             </ul>
           </div>
         </div>
@@ -677,6 +692,27 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
             </div>
           </div>
         </div>
+      )}
+
+      {/* Slack Thread Preview Modal */}
+      {showSlackPreview && currentSlackUrl && (
+        <SlackThreadPreview
+          url={currentSlackUrl}
+          isVisible={showSlackPreview}
+          onClose={() => setShowSlackPreview(false)}
+          appendToIssueMarkdown={(content: string) => {
+            // Add Slack context to the current markdown
+            const contextSection = `\n\n## Context from Slack thread\n\n${content}`;
+            setMarkdownContent(prev => {
+              // Check if context section already exists
+              if (prev.includes('## Context from Slack thread')) {
+                return prev;
+              }
+              return prev + contextSection;
+            });
+          }}
+          currentMarkdown={markdownContent}
+        />
       )}
     </motion.div>
   );
