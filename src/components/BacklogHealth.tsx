@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, TrendingUp, Clock, Target, Search, RefreshCw } from 'lucide-react';
+import { AlertTriangle, TrendingUp, Clock, Target, Search, RefreshCw, ExternalLink } from 'lucide-react';
 import { githubService } from '../services/github';
 import { BacklogAnalyzer, BacklogMetrics } from '../services/backlogAnalyzer';
 import { ConfigService } from '../services/configService';
@@ -94,6 +94,43 @@ const BacklogHealth: React.FC = () => {
     }
   };
 
+  const getGitHubSearchUrl = (problemType: string) => {
+    const config = ConfigService.load();
+    const baseUrl = `https://github.com/${config.github.owner}/${config.github.repo}/issues`;
+    
+    switch (problemType) {
+      case 'ancient-issues':
+        // Issues older than 6 months
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        const dateStr = sixMonthsAgo.toISOString().split('T')[0];
+        return `${baseUrl}?q=is%3Aopen+is%3Aissue+created%3A%3C${dateStr}`;
+      
+      case 'priority-skew':
+        // High priority issues
+        return `${baseUrl}?q=is%3Aopen+is%3Aissue+label%3A"${encodeURIComponent(config.labels.priority.high)}"`;
+      
+      case 'grooming-backlog':
+        // Issues without priority labels
+        const priorityLabels = [
+          config.labels.priority.high,
+          config.labels.priority.medium,
+          config.labels.priority.low
+        ].map(label => `-label%3A"${encodeURIComponent(label)}"`).join('+');
+        return `${baseUrl}?q=is%3Aopen+is%3Aissue+${priorityLabels}`;
+      
+      case 'creation-rate':
+        // Issues created in last 30 days
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const recentDateStr = thirtyDaysAgo.toISOString().split('T')[0];
+        return `${baseUrl}?q=is%3Aopen+is%3Aissue+created%3A%3E${recentDateStr}`;
+      
+      default:
+        return `${baseUrl}?q=is%3Aopen+is%3Aissue`;
+    }
+  };
+
   return (
     <div className="p-6 space-y-6 max-w-6xl mx-auto">
       {/* Header */}
@@ -135,9 +172,24 @@ const BacklogHealth: React.FC = () => {
           <div className="grid gap-3">
             {metrics.problems.map((problem, index) => (
               <div key={index} className={`p-3 rounded-md ${problem.severity === 'critical' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'}`}>
-                <span className="font-medium">
-                  {problem.severity === 'critical' ? '🔴' : '⚠️'} {problem.message}
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="font-medium">
+                    {problem.severity === 'critical' ? '🔴' : '⚠️'} {problem.message}
+                  </span>
+                  <a
+                    href={getGitHubSearchUrl(problem.type)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`ml-3 flex items-center gap-1 text-xs px-2 py-1 rounded ${
+                      problem.severity === 'critical' 
+                        ? 'bg-red-200 text-red-900 hover:bg-red-300' 
+                        : 'bg-yellow-200 text-yellow-900 hover:bg-yellow-300'
+                    } transition-colors`}
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    View in GitHub
+                  </a>
+                </div>
               </div>
             ))}
           </div>
@@ -239,9 +291,22 @@ const BacklogHealth: React.FC = () => {
         <div className="grid gap-3">
           {metrics.priorityBalance.ungroomed > 20 && (
             <div className="p-3 bg-white rounded border-l-4 border-blue-500">
-              <div className="font-medium text-gray-900">Prioritize Ungroomed Issues</div>
-              <div className="text-sm text-gray-600">
-                {metrics.priorityBalance.ungroomed} issues need prioritization. Press ⌘K and search "is:open -label:priority" to find them.
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="font-medium text-gray-900">Prioritize Ungroomed Issues</div>
+                  <div className="text-sm text-gray-600">
+                    {metrics.priorityBalance.ungroomed} issues need prioritization. Press ⌘K and search "is:open -label:priority" to find them.
+                  </div>
+                </div>
+                <a
+                  href={getGitHubSearchUrl('grooming-backlog')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-3 flex items-center gap-1 text-xs px-2 py-1 bg-blue-100 text-blue-900 rounded hover:bg-blue-200 transition-colors flex-shrink-0"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  View in GitHub
+                </a>
               </div>
             </div>
           )}
@@ -255,17 +320,43 @@ const BacklogHealth: React.FC = () => {
           )}
           {(metrics.ageDistribution.stale + metrics.ageDistribution.ancient) > 10 && (
             <div className="p-3 bg-white rounded border-l-4 border-red-500">
-              <div className="font-medium text-gray-900">Review Old Issues</div>
-              <div className="text-sm text-gray-600">
-                {metrics.ageDistribution.stale + metrics.ageDistribution.ancient} issues are 3+ months old. Consider closing outdated ones.
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="font-medium text-gray-900">Review Old Issues</div>
+                  <div className="text-sm text-gray-600">
+                    {metrics.ageDistribution.stale + metrics.ageDistribution.ancient} issues are 3+ months old. Consider closing outdated ones.
+                  </div>
+                </div>
+                <a
+                  href={getGitHubSearchUrl('ancient-issues')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-3 flex items-center gap-1 text-xs px-2 py-1 bg-red-100 text-red-900 rounded hover:bg-red-200 transition-colors flex-shrink-0"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  View in GitHub
+                </a>
               </div>
             </div>
           )}
           {metrics.velocity.issuesCreatedLast30Days > metrics.velocity.issuesGroomedLast30Days * 2 && (
             <div className="p-3 bg-white rounded border-l-4 border-yellow-500">
-              <div className="font-medium text-gray-900">High Intake Rate</div>
-              <div className="text-sm text-gray-600">
-                Creating issues faster than grooming them. Consider filtering or batching new issues.
+              <div className="flex items-start justify-between">
+                <div>
+                  <div className="font-medium text-gray-900">High Intake Rate</div>
+                  <div className="text-sm text-gray-600">
+                    Creating issues faster than grooming them. Consider filtering or batching new issues.
+                  </div>
+                </div>
+                <a
+                  href={getGitHubSearchUrl('creation-rate')}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-3 flex items-center gap-1 text-xs px-2 py-1 bg-yellow-100 text-yellow-900 rounded hover:bg-yellow-200 transition-colors flex-shrink-0"
+                >
+                  <ExternalLink className="w-3 h-3" />
+                  View in GitHub
+                </a>
               </div>
             </div>
           )}
