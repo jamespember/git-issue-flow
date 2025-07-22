@@ -7,6 +7,7 @@ import LabelManager from './LabelManager';
 import { ChevronLeft, ChevronRight, ChevronDown, Check, Clock, Calendar, X } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 import { aiService } from '../services/aiService';
+import { ConfigService } from '../services/configService';
 
 type IssueViewerProps = {
   issue: GitHubIssue;
@@ -48,10 +49,11 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
   
   const getPriority = () => {
     if (!issue) return undefined;
+    const config = ConfigService.load();
     const labelNames = issue.labels.map(l => l.name);
-    if (labelNames.includes('prio-high')) return 'high';
-    if (labelNames.includes('prio-medium')) return 'medium';
-    if (labelNames.includes('prio-low')) return 'low';
+    if (labelNames.includes(config.labels.priority.high)) return 'high';
+    if (labelNames.includes(config.labels.priority.medium)) return 'medium';
+    if (labelNames.includes(config.labels.priority.low)) return 'low';
     return undefined;
   };
   const priority = getPriority();
@@ -309,7 +311,7 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-gray-500 dark:text-gray-400">
-              {issue.user.login}/komo-platform
+              {issue.user.login}/{ConfigService.load().github.repo || 'unknown-repo'}
             </span>
             <span className="px-2 py-0.5 text-xs rounded-full bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200">
               #{issue.number}

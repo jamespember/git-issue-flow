@@ -7,10 +7,12 @@ import IssueViewer from './components/IssueViewer';
 import IssueNavigator from './components/IssueNavigator';
 import EmptyState from './components/EmptyState';
 import CommandK from './components/CommandK';
+import Settings from './components/Settings';
+import ConfigurationBanner from './components/ConfigurationBanner';
 
 function App() {
   const [isCommandKOpen, setIsCommandKOpen] = useState(false);
-  const [currentView, setCurrentView] = useState<'grooming' | 'health'>('grooming');
+  const [currentView, setCurrentView] = useState<'grooming' | 'health' | 'settings'>('grooming');
   
   const { 
     issues, 
@@ -40,8 +42,11 @@ function App() {
       <main className="flex-1">
         {currentView === 'health' ? (
           <BacklogHealth />
+        ) : currentView === 'settings' ? (
+          <Settings />
         ) : (
           <div className="container mx-auto px-4 py-6 md:px-6 lg:px-8">
+            <ConfigurationBanner onGoToSettings={() => setCurrentView('settings')} />
             <AnimatePresence mode="wait">
               {fetchStatus === 'loading' && (
                 <div className="flex items-center justify-center h-[80vh]">
@@ -50,11 +55,25 @@ function App() {
               )}
               {fetchStatus === 'error' && (
                 <div className="flex items-center justify-center h-[80vh]">
-                  <div className="text-center p-8 rounded-lg bg-red-50 text-red-600">
+                  <div className="text-center p-8 rounded-lg bg-red-50 text-red-600 max-w-md">
                     <h3 className="text-lg font-medium mb-2">Error loading issues</h3>
-                    <p className="mb-4">There was a problem connecting to GitHub. Please check your connection and try searching again.</p>
-                    <div className="text-sm text-gray-600">
-                      Press <kbd className="px-1.5 py-0.5 text-xs bg-white border rounded">⌘K</kbd> or <kbd className="px-1.5 py-0.5 text-xs bg-white border rounded">Ctrl+K</kbd> to search for issues
+                    <p className="mb-4">There was a problem connecting to GitHub. This could be due to:</p>
+                    <ul className="text-sm text-left mb-4 space-y-1">
+                      <li>• Invalid or expired access token</li>
+                      <li>• Incorrect repository configuration</li>
+                      <li>• Network connectivity issues</li>
+                      <li>• GitHub API rate limiting</li>
+                    </ul>
+                    <div className="flex flex-col gap-2">
+                      <button
+                        onClick={() => setCurrentView('settings')}
+                        className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
+                      >
+                        Check Settings
+                      </button>
+                      <div className="text-sm text-gray-600">
+                        Or press <kbd className="px-1.5 py-0.5 text-xs bg-white border rounded">⌘K</kbd> / <kbd className="px-1.5 py-0.5 text-xs bg-white border rounded">Ctrl+K</kbd> to try again
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -70,7 +89,7 @@ function App() {
                 </AnimatePresence>
               )}
               {fetchStatus === 'success' && issues.length === 0 && (
-                <EmptyState />
+                <EmptyState onGoToSettings={() => setCurrentView('settings')} />
               )}
             </AnimatePresence>
             {fetchStatus === 'success' && issues.length > 0 && (
