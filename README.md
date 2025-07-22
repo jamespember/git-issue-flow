@@ -1,8 +1,8 @@
 # GitHub Issue Groomer
 
-A focused GitHub issue management tool that helps product managers and developers efficiently groom and prioritize issues through powerful search and quick actions. **Fully configurable for any GitHub repository** - no hardcoded values, works locally, no database required.
+A very fast and focused GitHub issue management tool that helps product managers and developers efficiently groom and prioritize issues through powerful search and quick actions. **Fully configurable for any GitHub repository** - no hardcoded values, works locally, no database required.
 
-![GitHub Issue Groomer](https://images.pexels.com/photos/7376/startup-photos.jpg?auto=compress&cs=tinysrgb&w=400)
+Made by [James Pember](https://jamespember.com)
 
 ## 🚀 Quick Start
 
@@ -97,3 +97,23 @@ A focused GitHub issue management tool that helps product managers and developer
 - **Exclude Prioritized**: Hide issues that already have priority labels
 - **Exclude Dependencies**: Filter out issues with specific labels (e.g., `dependencies`, `wontfix`)
 - **Default Batch Size**: Number of issues to load per search (1-100)
+
+## 🔒 Security & Privacy
+
+- **Local-only**: All data stored in browser localStorage, nothing sent to external servers
+- **Token security**: GitHub tokens stored locally, never transmitted except to GitHub API
+- **No tracking**: No analytics, no telemetry, no external dependencies beyond GitHub API
+- **Open source**: Full transparency, inspect and modify all code
+- **Secure defaults**: Tokens masked in UI, export function redacts sensitive data
+
+### Development Setup
+
+1. Fork and clone the repository
+2. Install dependencies: `npm install`
+3. Start development server: `npm run dev`
+4. Make your changes and test thoroughly
+5. Submit a pull request with clear description
+
+## 📝 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
