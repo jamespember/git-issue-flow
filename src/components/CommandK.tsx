@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { X, Search, Command } from 'lucide-react';
+import { X, Search, Command, AlertTriangle } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
+import { ConfigService } from '../services/configService';
 
 interface CommandKProps {
   isOpen: boolean;
@@ -49,6 +50,12 @@ const CommandK: React.FC<CommandKProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
     if (!query.trim()) return;
     
+    // Check if configuration is valid
+    if (!ConfigService.isConfigured()) {
+      alert('Please configure your GitHub repository and token in Settings first.');
+      return;
+    }
+    
     try {
       // Add sort order to the query
       const sortSuffix = sortOrder === 'oldest' ? ' sort:created-asc' : ' sort:created-desc';
@@ -71,6 +78,9 @@ const CommandK: React.FC<CommandKProps> = ({ isOpen, onClose }) => {
 
   if (!isOpen) return null;
 
+  const config = ConfigService.load();
+  const isConfigured = ConfigService.isConfigured();
+
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 bg-black bg-opacity-50">
       <div className="bg-white rounded-lg shadow-xl w-full max-w-2xl mx-4">
@@ -87,6 +97,18 @@ const CommandK: React.FC<CommandKProps> = ({ isOpen, onClose }) => {
           </button>
         </div>
 
+        {!isConfigured && (
+          <div className="mx-4 mt-4 p-3 bg-amber-50 border border-amber-200 rounded-md">
+            <div className="flex items-center gap-2 text-amber-800">
+              <AlertTriangle className="w-4 h-4" />
+              <span className="text-sm font-medium">Configuration Required</span>
+            </div>
+            <p className="text-sm text-amber-700 mt-1">
+              Please configure your GitHub repository and access token in Settings before searching for issues.
+            </p>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="p-4">
           <div className="mb-4">
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -97,11 +119,16 @@ const CommandK: React.FC<CommandKProps> = ({ isOpen, onClose }) => {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="is:open is:issue label:&quot;is: bug&quot; -label:groomed-james"
-              className="w-full h-24 px-3 py-2 border border-gray-300 rounded-md font-mono text-sm bg-white text-gray-900 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50 resize-none"
-              autoFocus
+              className={`w-full h-24 px-3 py-2 border border-gray-300 rounded-md font-mono text-sm resize-none ${
+                isConfigured 
+                  ? 'bg-white text-gray-900 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50' 
+                  : 'bg-gray-100 text-gray-500 cursor-not-allowed'
+              }`}
+              disabled={!isConfigured}
+              autoFocus={isConfigured}
             />
             <p className="text-xs text-gray-500 mt-1">
-              Use GitHub's search syntax. The query will be automatically scoped to komo-tech/komo-platform.
+              Use GitHub's search syntax. The query will be automatically scoped to {ConfigService.load().github.owner || 'owner'}/{ConfigService.load().github.repo || 'repo'}.
             </p>
           </div>
 
@@ -168,9 +195,9 @@ const CommandK: React.FC<CommandKProps> = ({ isOpen, onClose }) => {
               </button>
               <button
                 type="submit"
-                disabled={!query.trim() || isLoading}
+                disabled={!query.trim() || isLoading || !isConfigured}
                 className={`px-4 py-2 text-sm rounded-md transition-colors ${
-                  !query.trim() || isLoading
+                  !query.trim() || isLoading || !isConfigured
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : 'bg-blue-600 hover:bg-blue-700 text-white'
                 }`}

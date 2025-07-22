@@ -1,15 +1,23 @@
 import { GitHubIssue } from '../types/github';
+import { ConfigService } from './configService';
 
 const GITHUB_API_URL = import.meta.env.VITE_GITHUB_API_URL || 'https://api.github.com';
 
 class GitHubService {
-  private token: string;
+  private getConfig() {
+    return ConfigService.load();
+  }
 
-  constructor() {
-    this.token = import.meta.env.VITE_GITHUB_TOKEN || '';
+  private get token() {
+    const config = this.getConfig();
+    return config.github.token || import.meta.env.VITE_GITHUB_TOKEN || '';
   }
 
   private async fetchWithAuth(url: string, options: RequestInit = {}) {
+    if (!this.token) {
+      throw new Error('GitHub access token not configured. Please set up your token in Settings.');
+    }
+
     const headers = {
       'Authorization': `Bearer ${this.token}`,
       'Accept': 'application/vnd.github.v3+json',
@@ -19,6 +27,15 @@ class GitHubService {
     const response = await fetch(url, { ...options, headers });
     
     if (!response.ok) {
+      if (response.status === 401) {
+        throw new Error('GitHub authentication failed. Please check your access token in Settings.');
+      }
+      if (response.status === 403) {
+        throw new Error('GitHub API rate limit exceeded or insufficient permissions. Please check your token permissions.');
+      }
+      if (response.status === 404) {
+        throw new Error('Repository not found. Please check your repository configuration in Settings.');
+      }
       throw new Error(`GitHub API error: ${response.statusText}`);
     }
 
@@ -31,10 +48,18 @@ class GitHubService {
     query: string;
     per_page?: number;
   }): Promise<GitHubIssue[]> {
+    const config = this.getConfig();
+    
     // Construct the full search query with repo scope and priority exclusions
-    const priorityExclusions = '-label:prio-high -label:prio-medium -label:prio-low';
-    const dependencyExclusions = '-label:dependencies';
-    const fullQuery = `repo:${owner}/${repo} ${query} ${priorityExclusions} ${dependencyExclusions}`;
+    const priorityExclusions = config.workflow.excludePrioritized 
+      ? `-label:${config.labels.priority.high} -label:${config.labels.priority.medium} -label:${config.labels.priority.low}`
+      : '';
+    
+    const dependencyExclusions = config.workflow.excludeDependencies 
+      ? config.labels.exclude.map(label => `-label:${label}`).join(' ')
+      : '';
+      
+    const fullQuery = `repo:${owner}/${repo} ${query} ${priorityExclusions} ${dependencyExclusions}`.trim();
     
     const queryParams = new URLSearchParams({
       q: fullQuery,

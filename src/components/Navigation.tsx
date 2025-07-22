@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { Activity, Target, RefreshCw } from 'lucide-react';
+import { Activity, Target, RefreshCw, Settings } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 // import { LocaleSwitcher } from "lingo.dev/react/client";
 
 interface NavigationProps {
-  currentView: 'grooming' | 'health';
-  onViewChange: (view: 'grooming' | 'health') => void;
+  currentView: 'grooming' | 'health' | 'settings';
+  onViewChange: (view: 'grooming' | 'health' | 'settings') => void;
 }
 
 const Navigation: React.FC<NavigationProps> = ({ currentView, onViewChange }) => {
@@ -93,6 +93,17 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onViewChange }) =>
             >
               <Activity className="w-4 h-4 mr-1 inline" />
               Health
+            </button>
+            <button
+              onClick={() => onViewChange('settings')}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                currentView === 'settings'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <Settings className="w-4 h-4 mr-1 inline" />
+              Settings
             </button>
           </div>
           
