@@ -58,13 +58,18 @@ Add API key in Settings for AI-powered features
 | Shortcut | Action |
 |----------|--------|
 | `⌘K`/`Ctrl+K` | Open search |
-| `Alt + ←/→` | Navigate issues |
+| `Alt + ←` | Previous issue |
+| `Alt + →` | Next issue |
 | `Ctrl + E` | Edit description |
 | `Ctrl + S` | Save changes |
-| `Ctrl + H/M/L` | Set priority |
-| `Ctrl + C` | Mark complete |
+| `Ctrl + C` | Mark as complete |
+| `Ctrl + O` | Open on GitHub |
+| `Ctrl + H` | Set high priority |
+| `Ctrl + M` | Set medium priority |
+| `Ctrl + L` | Set low priority |
 | `Ctrl + X` | Close as not planned |
-| `Ctrl + Shift + S` | Preview Slack thread (when available) |
+| `Ctrl + Shift + R` | Refresh all issues |
+| `Ctrl + Shift + S` | Preview Slack thread |
 
 ## Troubleshooting
 
