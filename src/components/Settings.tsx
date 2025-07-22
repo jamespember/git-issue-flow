@@ -93,7 +93,7 @@ const Settings: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'github-groomer-config.json';
+    a.download = 'gitissueflow-config.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -528,7 +528,7 @@ const Settings: React.FC = () => {
               <div className="flex items-start gap-2">
                 <span className="font-semibold bg-blue-200 text-blue-900 rounded-full w-5 h-5 text-xs flex items-center justify-center flex-shrink-0 mt-0.5">3</span>
                 <div>
-                  <p>Give it a descriptive name like <code className="bg-blue-200 px-1 rounded">"GitHub Issue Groomer"</code></p>
+                  <p>Give it a descriptive name like <code className="bg-blue-200 px-1 rounded">"GitIssueFlow"</code></p>
                 </div>
               </div>
               
@@ -734,7 +734,7 @@ const Settings: React.FC = () => {
                     <div className="flex items-start gap-2">
                       <span className="font-semibold bg-purple-200 text-purple-900 rounded-full w-5 h-5 text-xs flex items-center justify-center flex-shrink-0 mt-0.5">2</span>
                       <div>
-                        <p>Choose <strong>"From scratch"</strong>, name it <code className="bg-purple-200 px-1 rounded">"GitHub Issue Groomer"</code>, and select your workspace</p>
+                        <p>Choose <strong>"From scratch"</strong>, name it <code className="bg-purple-200 px-1 rounded">"GitIssueFlow"</code>, and select your workspace</p>
                       </div>
                     </div>
                     
@@ -855,7 +855,7 @@ const Settings: React.FC = () => {
                   <div className="flex items-start gap-2">
                     <span className="font-semibold bg-green-200 text-green-900 rounded-full w-5 h-5 text-xs flex items-center justify-center flex-shrink-0 mt-0.5">4</span>
                     <div>
-                      <p>Give it a name like <code className="bg-green-200 px-1 rounded">"GitHub Issue Groomer"</code> and click <strong>"Create secret key"</strong></p>
+                      <p>Give it a name like <code className="bg-green-200 px-1 rounded">"GitIssueFlow"</code> and click <strong>"Create secret key"</strong></p>
                     </div>
                   </div>
                   

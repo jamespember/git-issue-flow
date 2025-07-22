@@ -5,7 +5,7 @@ import { UserConfig, DEFAULT_CONFIG } from '../config/userConfig';
  * Provides save, load, reset, and validation functionality
  */
 export class ConfigService {
-  private static readonly CONFIG_KEY = 'github-groomer-config';
+  private static readonly CONFIG_KEY = 'gitissueflow-config';
   private static readonly CONFIG_VERSION = '1.0';
   
   /**

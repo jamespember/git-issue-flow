@@ -1,5 +1,5 @@
 /**
- * User configuration interface for open-source GitHub Issue Groomer
+ * User configuration interface for open-source GitIssueFlow
  * All settings are stored locally in browser localStorage
  */
 

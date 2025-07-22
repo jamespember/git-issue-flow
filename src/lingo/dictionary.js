@@ -1879,7 +1879,7 @@ export default {
       entries: {
         "4/0/init/body/0/argument/1/1": {
           content: {
-            en: "James' Magical Backlog Groomer",
+            en: "GitIssueFlow",
             sv: "James' magiska backloggskötsel",
           },
           hash: "8160e0ec4dc43f958747a961c2e3f985",

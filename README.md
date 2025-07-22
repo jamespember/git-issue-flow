@@ -1,4 +1,4 @@
-# GitHub Issue Groomer
+# GitIssueFlow
 
 A very fast and focused GitHub issue management tool that helps product managers and developers efficiently groom and prioritize issues through powerful search and quick actions. **Fully configurable for any GitHub repository** - no hardcoded values, works locally, no database required.
 
@@ -15,8 +15,8 @@ Made by [James Pember](https://jamespember.com)
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/jamespember/github-groomer.git
-   cd github-groomer
+   git clone https://github.com/jamespember/gitissueflow.git
+   cd gitissueflow
    ```
 
 2. **Install dependencies**

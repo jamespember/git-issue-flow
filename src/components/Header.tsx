@@ -43,7 +43,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-2">
           <CheckCircle className="w-6 h-6 text-blue-500" />
-          <h1 className="text-xl font-bold">James' Magical Backlog Groomer</h1>
+          <h1 className="text-xl font-bold">GitIssueFlow</h1>
         </div>
         
         <div className="flex items-center space-x-3">
