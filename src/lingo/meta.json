@@ -1,0 +1,2849 @@
+{
+  "version": 0.1,
+  "files": {
+    "App.tsx": {
+      "scopes": {
+        "9/body/4/argument/3/1/expression/alternate/1/3/expression/right/1/1": {
+          "type": "element",
+          "hash": "a2a0a522c93aae775c71ec703223a47b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Error loading issues"
+        },
+        "9/body/4/argument/3/1/expression/alternate/1/3/expression/right/1/3": {
+          "type": "element",
+          "hash": "d231303c8201cc1ca6900565231d761f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "There was a problem connecting to GitHub. Please check your connection and try searching again."
+        },
+        "9/body/4/argument/3/1/expression/alternate/1/3/expression/right/1/5": {
+          "type": "element",
+          "hash": "e332eae590ddd1821260e54ad1b61b2b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Press <element:kbd>⌘K</element:kbd> or <element:kbd>Ctrl+K</element:kbd> to search for issues"
+        }
+      }
+    },
+    "components/BacklogHealth.tsx": {
+      "scopes": {
+        "5/0/init/body/15/argument/11/expression/right/1/3": {
+          "type": "element",
+          "hash": "34eed80fa60a334fbf9fe0964de57f7a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Issues Detected"
+        },
+        "5/0/init/body/15/argument/11/expression/right/1/5-title": {
+          "type": "attribute",
+          "hash": "a244c047e85edaee3b0704b40c61a355",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Automated Problem Detection"
+        },
+        "5/0/init/body/15/argument/11/expression/right/1/5/openingElement/1/value/expression/1": {
+          "type": "element",
+          "hash": "77abc8c3a53f914fbff11453c79664de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "These are potential problems automatically detected in your backlog:"
+        },
+        "5/0/init/body/15/argument/11/expression/right/1/5/openingElement/1/value/expression/3": {
+          "type": "element",
+          "hash": "fdae173c4f671b202c6be1e58867da65",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>🔴 Critical:</element:strong> Requires immediate attention"
+        },
+        "5/0/init/body/15/argument/11/expression/right/1/5/openingElement/1/value/expression/5": {
+          "type": "element",
+          "hash": "4f603500245549e48cf7462b334b7f10",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>⚠️ Warning:</element:strong> Should be addressed soon"
+        },
+        "5/0/init/body/15/argument/11/expression/right/1/5/openingElement/1/value/expression/7": {
+          "type": "element",
+          "hash": "3d70b855d62ffeec955d2bb95b00fca3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Click through to the grooming view to start addressing these issues."
+        },
+        "5/0/init/body/15/argument/15/3/1/1": {
+          "type": "element",
+          "hash": "3edfe70cf6ef96496fe317eec0d30b44",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Age Distribution"
+        },
+        "5/0/init/body/15/argument/15/3/1/3-title": {
+          "type": "attribute",
+          "hash": "0c67326d54de663e4423b01b1d92039d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Issue Age Categories"
+        },
+        "5/0/init/body/15/argument/15/3/1/3/openingElement/1/value/expression/1": {
+          "type": "element",
+          "hash": "f7806d87315017b4c4cd20fa72b4d191",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Shows how long issues have been open:"
+        },
+        "5/0/init/body/15/argument/15/3/1/3/openingElement/1/value/expression/11": {
+          "type": "element",
+          "hash": "58fcf7ae493f4260b234af6a263ecfd9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Ancient (6m+):</element:strong> Likely needs re-evaluation"
+        },
+        "5/0/init/body/15/argument/15/3/1/3/openingElement/1/value/expression/13": {
+          "type": "element",
+          "hash": "b792f6eaf98f848980d2c4537f4ace8f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:strong>Ideal:</element:strong> Most issues in Fresh/Recent categories"
+        },
+        "5/0/init/body/15/argument/15/3/1/3/openingElement/1/value/expression/3": {
+          "type": "element",
+          "hash": "a6f27ea4db95bb83b98053e6f9ebf11f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Fresh (0-7d):</element:strong> Brand new issues with full context"
+        },
+        "5/0/init/body/15/argument/15/3/1/3/openingElement/1/value/expression/5": {
+          "type": "element",
+          "hash": "332405e377fc8a8b70cf199ad1b520e9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Recent (1-4w):</element:strong> Still fresh, good context"
+        },
+        "5/0/init/body/15/argument/15/3/1/3/openingElement/1/value/expression/7": {
+          "type": "element",
+          "hash": "f7b7903e4c82ad570138b1a558cf0455",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Aging (1-3m):</element:strong> Starting to lose context"
+        },
+        "5/0/init/body/15/argument/15/3/1/3/openingElement/1/value/expression/9": {
+          "type": "element",
+          "hash": "ce5f912e2b1ef5700e90ab22d6badc28",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Stale (3-6m):</element:strong> Context may be outdated"
+        },
+        "5/0/init/body/15/argument/15/7/1/1": {
+          "type": "element",
+          "hash": "be6f695f5bc7e62c5676d41c69352d00",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority Balance"
+        },
+        "5/0/init/body/15/argument/15/7/1/3-title": {
+          "type": "attribute",
+          "hash": "7692fbc67fd542fe12d986ab71214e5b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority Distribution"
+        },
+        "5/0/init/body/15/argument/15/7/1/3/openingElement/1/value/expression/1": {
+          "type": "element",
+          "hash": "7e27ad83e409ec9f451f3e19ab1b9f7d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Shows how issues are prioritized:"
+        },
+        "5/0/init/body/15/argument/15/7/1/3/openingElement/1/value/expression/11": {
+          "type": "element",
+          "hash": "ec30b1510571101a4ac95d17bd1da4f5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:strong>Healthy pyramid:</element:strong> Few high, some medium, many low priority items"
+        },
+        "5/0/init/body/15/argument/15/7/1/3/openingElement/1/value/expression/3": {
+          "type": "element",
+          "hash": "3e616b350a51086f38ee329d1e0bcc7c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>High:</element:strong> Urgent, blocking, or critical business value"
+        },
+        "5/0/init/body/15/argument/15/7/1/3/openingElement/1/value/expression/5": {
+          "type": "element",
+          "hash": "bbb7aebba067bc8934561e343f4e8b8a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Medium:</element:strong> Important but not urgent"
+        },
+        "5/0/init/body/15/argument/15/7/1/3/openingElement/1/value/expression/7": {
+          "type": "element",
+          "hash": "9b012130fcd7f20224072fdbf1e1424e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Low:</element:strong> Nice to have or future considerations"
+        },
+        "5/0/init/body/15/argument/15/7/1/3/openingElement/1/value/expression/9": {
+          "type": "element",
+          "hash": "b2e7fe3c41983c40db6b1b2190547430",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Ungroomed:</element:strong> Not yet prioritized (need attention)"
+        },
+        "5/0/init/body/15/argument/19/1/1": {
+          "type": "element",
+          "hash": "f4a8ce719ba2ec94132438fea734a2be",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Velocity Metrics (Last 30 Days)"
+        },
+        "5/0/init/body/15/argument/19/1/3-title": {
+          "type": "attribute",
+          "hash": "8f00d564f1ee9e64cf2cd5631b131101",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Backlog Flow Metrics"
+        },
+        "5/0/init/body/15/argument/19/1/3/openingElement/1/value/expression/1": {
+          "type": "element",
+          "hash": "981e999dea72cf9a09e5a021e1c649e5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Tracks the flow of work through your backlog:"
+        },
+        "5/0/init/body/15/argument/19/1/3/openingElement/1/value/expression/3": {
+          "type": "element",
+          "hash": "44a581676c86bfbb0396d7450e478b69",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Issues Created:</element:strong> New issues added to backlog"
+        },
+        "5/0/init/body/15/argument/19/1/3/openingElement/1/value/expression/5": {
+          "type": "element",
+          "hash": "22230773f61fa1e9ae093221849cc9b6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Issues Groomed:</element:strong> Issues that got prioritized"
+        },
+        "5/0/init/body/15/argument/19/1/3/openingElement/1/value/expression/7": {
+          "type": "element",
+          "hash": "035e22421f4ed3592cef04831dda6c2a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Avg Days to Groom:</element:strong> Time from creation to prioritization"
+        },
+        "5/0/init/body/15/argument/19/1/3/openingElement/1/value/expression/9": {
+          "type": "element",
+          "hash": "ecea38ee180fa0625351d75562b7045f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:strong>Ideal:</element:strong> Grooming keeps pace with creation, fast triage (<expression/>7 days)"
+        },
+        "5/0/init/body/15/argument/19/3/1/3": {
+          "type": "element",
+          "hash": "add077bd7abede31480a747a6903c88e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Issues Created"
+        },
+        "5/0/init/body/15/argument/19/3/1/5": {
+          "type": "element",
+          "hash": "7d37763d440f9f3a8428e480a70f1259",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Backlog growth rate"
+        },
+        "5/0/init/body/15/argument/19/3/3/3": {
+          "type": "element",
+          "hash": "e8e10ed0dc18c1f39ff1c00b870cc27a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Issues Groomed"
+        },
+        "5/0/init/body/15/argument/19/3/3/5": {
+          "type": "element",
+          "hash": "ce349d10451e16307f6dc6be96a151bf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Processing capacity"
+        },
+        "5/0/init/body/15/argument/19/3/5/3": {
+          "type": "element",
+          "hash": "8ce3f48e9a44e75de165f2f98ab0bdc6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Avg Days to Groom"
+        },
+        "5/0/init/body/15/argument/19/3/5/5": {
+          "type": "element",
+          "hash": "63c29d5e20c3c6be10b409a297a51246",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Response time"
+        },
+        "5/0/init/body/15/argument/23/1/1": {
+          "type": "element",
+          "hash": "284cb43895e9cb4f4212e3ee68a2bec7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "💡 Recommended Actions"
+        },
+        "5/0/init/body/15/argument/23/3/1/expression/right": {
+          "type": "element",
+          "hash": "daffe5901905c54f066d2e34c2758b5a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Priority Focus:</element:strong> You have {metrics.priorityBalance.ungroomed} ungroomed issues. Use Command+K to search and prioritize the most important ones."
+        },
+        "5/0/init/body/15/argument/23/3/3/expression/right": {
+          "type": "element",
+          "hash": "b889973006c102d202092effdd41432d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Speed Up Grooming:</element:strong> Issues are taking <function:Math.round/> days to groom on average. Aim for under 7 days to maintain context."
+        },
+        "5/0/init/body/15/argument/23/3/5/expression/right": {
+          "type": "element",
+          "hash": "ee1f1c57e81391ee428ba7374ae65f7e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Clean Old Issues:</element:strong> Consider closing or re-evaluating <expression/> old issues that may no longer be relevant."
+        },
+        "5/0/init/body/15/argument/23/3/7/expression/right": {
+          "type": "element",
+          "hash": "aec6be7bcc14056d35bc7fee5eb62173",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>Manage Intake:</element:strong> High creation rate ({metrics.velocity.issuesCreatedLast30Days} issues/month). Consider filtering or batching new issues."
+        },
+        "5/0/init/body/15/argument/3/1/1": {
+          "type": "element",
+          "hash": "ee0475423fe85fe28c49e947f12514be",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Backlog Health Dashboard"
+        },
+        "5/0/init/body/15/argument/3/1/3-title": {
+          "type": "attribute",
+          "hash": "6d6fa6de099c9df079562e06078295ff",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Backlog Health Overview"
+        },
+        "5/0/init/body/15/argument/3/1/3/openingElement/1/value/expression": {
+          "type": "element",
+          "hash": "da3f335c840dd995961f0b8d147fec67",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This dashboard analyzes your entire backlog to identify potential problems and track key health metrics. A healthy backlog has a good mix of fresh and recent issues, balanced priorities, and steady grooming velocity."
+        },
+        "5/0/init/body/15/argument/3/3": {
+          "type": "element",
+          "hash": "33183ae922e904beba06ddf4482a446d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Analysis of {metrics.totalIssues} total issues"
+        },
+        "5/0/init/body/15/argument/7/1/1/3/1": {
+          "type": "element",
+          "hash": "eb17b7658ac5327ff8353f0fbd98f3f3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{metrics.healthScore.score}/100"
+        },
+        "5/0/init/body/15/argument/7/1/1/5-title": {
+          "type": "attribute",
+          "hash": "ec6d54daf309c0f8c825fb22cb21b4e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Overall Health Score"
+        },
+        "5/0/init/body/15/argument/7/1/1/5/openingElement/1/value/expression/1": {
+          "type": "element",
+          "hash": "fca364d9528aaabd991de72db79d4e5e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Composite score combining age, priority, and velocity health:"
+        },
+        "5/0/init/body/15/argument/7/1/1/5/openingElement/1/value/expression/3": {
+          "type": "element",
+          "hash": "5d2b1a13de95e59762fb6247b66d8527",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>80-100:</element:strong> Healthy backlog"
+        },
+        "5/0/init/body/15/argument/7/1/1/5/openingElement/1/value/expression/5": {
+          "type": "element",
+          "hash": "64645180d5599321a47e0b376fe7ea13",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>60-79:</element:strong> Needs attention"
+        },
+        "5/0/init/body/15/argument/7/1/1/5/openingElement/1/value/expression/7": {
+          "type": "element",
+          "hash": "375edd8acc013c62f824681f39d670de",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• <element:strong>0-59:</element:strong> Critical issues"
+        },
+        "5/0/init/body/15/argument/7/1/1/5/openingElement/1/value/expression/9": {
+          "type": "element",
+          "hash": "f99fdf8a8cf3395bfe71942f2d1c7eef",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Based on weighted average: Age (40%) + Priority (40%) + Velocity (20%)"
+        },
+        "5/0/init/body/15/argument/7/3/1/3/1": {
+          "type": "element",
+          "hash": "eb17b7658ac5327ff8353f0fbd98f3f3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{metrics.healthScore.factors.ageHealth}/100"
+        },
+        "5/0/init/body/15/argument/7/3/1/3/3": {
+          "type": "element",
+          "hash": "c0f35b49479df86c8a34db59a15d0e78",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Age Health"
+        },
+        "5/0/init/body/15/argument/7/3/1/5-title": {
+          "type": "attribute",
+          "hash": "1e79e4906b541f52a1bf20e1bc65d134",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Age Health Score"
+        },
+        "5/0/init/body/15/argument/7/3/1/5/openingElement/1/value/expression/1": {
+          "type": "element",
+          "hash": "7a43368c398756a8f16afc10a5d8cfa0",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Measures how fresh your backlog is:"
+        },
+        "5/0/init/body/15/argument/7/3/1/5/openingElement/1/value/expression/3": {
+          "type": "element",
+          "hash": "b7e99c2e74ba4f2ed8dde768a6f75f65",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• Penalizes ancient issues (6+ months old)"
+        },
+        "5/0/init/body/15/argument/7/3/1/5/openingElement/1/value/expression/5": {
+          "type": "element",
+          "hash": "a13a33da03fcdc26f7e0fb9e121b4418",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• Penalizes stale issues (3-6 months old)"
+        },
+        "5/0/init/body/15/argument/7/3/1/5/openingElement/1/value/expression/7": {
+          "type": "element",
+          "hash": "896c1c95b57fe86075e89419c57b87e8",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• Rewards fresh/recent issues"
+        },
+        "5/0/init/body/15/argument/7/3/1/5/openingElement/1/value/expression/9": {
+          "type": "element",
+          "hash": "2a2bbc0d95b99d9aa236e4cd592cf42d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:strong>Why it matters:</element:strong> Old issues become harder to understand and implement. Fresh issues have better context."
+        },
+        "5/0/init/body/15/argument/7/5/1/3/1": {
+          "type": "element",
+          "hash": "eb17b7658ac5327ff8353f0fbd98f3f3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{metrics.healthScore.factors.priorityHealth}/100"
+        },
+        "5/0/init/body/15/argument/7/5/1/3/3": {
+          "type": "element",
+          "hash": "e824a165baf940bfa478cc4c6c29a49e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority Health"
+        },
+        "5/0/init/body/15/argument/7/5/1/5-title": {
+          "type": "attribute",
+          "hash": "3df0fa63440f17f4f3f6572eeb0ea554",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority Health Score"
+        },
+        "5/0/init/body/15/argument/7/5/1/5/openingElement/1/value/expression/1": {
+          "type": "element",
+          "hash": "e7da41d640cd8a128a8667adb59b53f7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Evaluates your priority distribution:"
+        },
+        "5/0/init/body/15/argument/7/5/1/5/openingElement/1/value/expression/3": {
+          "type": "element",
+          "hash": "58f7e0a7fffc61e0c6561b8661b5a3a5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• Healthy pyramid: More low/medium than high priority"
+        },
+        "5/0/init/body/15/argument/7/5/1/5/openingElement/1/value/expression/5": {
+          "type": "element",
+          "hash": "58a18e25d51bf4e779b0407b7e2f35fc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• Penalizes too many high priority items"
+        },
+        "5/0/init/body/15/argument/7/5/1/5/openingElement/1/value/expression/7": {
+          "type": "element",
+          "hash": "d59e8cb229ebc6ccb02abb3ffa54551f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• Penalizes large ungroomed backlogs"
+        },
+        "5/0/init/body/15/argument/7/5/1/5/openingElement/1/value/expression/9": {
+          "type": "element",
+          "hash": "5f495de2333a3334ac0788efb7a37735",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:strong>Why it matters:</element:strong> Everything can't be high priority. Good prioritization helps focus effort on what matters most."
+        },
+        "5/0/init/body/15/argument/7/7/1/3/1": {
+          "type": "element",
+          "hash": "eb17b7658ac5327ff8353f0fbd98f3f3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{metrics.healthScore.factors.velocityHealth}/100"
+        },
+        "5/0/init/body/15/argument/7/7/1/3/3": {
+          "type": "element",
+          "hash": "153aed2aca44f7d823c87f3377b3cf5e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Velocity Health"
+        },
+        "5/0/init/body/15/argument/7/7/1/5-title": {
+          "type": "attribute",
+          "hash": "950dd80f267493a19154a74d2b11db64",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Velocity Health Score"
+        },
+        "5/0/init/body/15/argument/7/7/1/5/openingElement/1/value/expression/1": {
+          "type": "element",
+          "hash": "a1a7ced143a53e009c921fcf53ed8738",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Measures how quickly you groom issues:"
+        },
+        "5/0/init/body/15/argument/7/7/1/5/openingElement/1/value/expression/3": {
+          "type": "element",
+          "hash": "9eea32f514f3a227522649241c4b9890",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• Based on average days from creation to grooming"
+        },
+        "5/0/init/body/15/argument/7/7/1/5/openingElement/1/value/expression/5": {
+          "type": "element",
+          "hash": "d2ba5f621b4cf791ae6bd13dc8e6aed8",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• Penalizes slow grooming (30+ days)"
+        },
+        "5/0/init/body/15/argument/7/7/1/5/openingElement/1/value/expression/7": {
+          "type": "element",
+          "hash": "7e60a732f18c9d8e5b49660d9552b9e6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "• Rewards fast triage and prioritization"
+        },
+        "5/0/init/body/15/argument/7/7/1/5/openingElement/1/value/expression/9": {
+          "type": "element",
+          "hash": "8b849a51887e8a5a11a83123958c4647",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:strong>Why it matters:</element:strong> Fast grooming means better context retention and quicker value delivery."
+        },
+        "5/0/init/body/7/consequent/0/argument/1/3": {
+          "type": "element",
+          "hash": "e3aff016fc4721d41306f2b6748eda3f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Loading Backlog Health"
+        },
+        "5/0/init/body/8/consequent/0/argument/1/1": {
+          "type": "element",
+          "hash": "2e8d362895ed45c921e8fca764562f57",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Error Loading Health Data"
+        },
+        "5/0/init/body/8/consequent/0/argument/1/5": {
+          "type": "element",
+          "hash": "711e44ee79387fc2e0ff716fc7594dee",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Retry"
+        },
+        "5/0/init/body/9/consequent/0/argument": {
+          "type": "element",
+          "hash": "fe1d34a45e22b5611d255b84b2d67232",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No data available"
+        }
+      }
+    },
+    "components/CommandK.tsx": {
+      "scopes": {
+        "4/0/init/body/11/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "f0bb11839b6e4e3889b95c367104ccc5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search & Load Issues"
+        },
+        "4/0/init/body/11/argument/1/3/1/1": {
+          "type": "element",
+          "hash": "3abbaec4a6444f551966a800acce9ac7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "GitHub Search Query"
+        },
+        "4/0/init/body/11/argument/1/3/1/3-placeholder": {
+          "type": "attribute",
+          "hash": "dad222c106a4259519ac8c40ab570e74",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "is:open is:issue label:\"is: bug\" -label:groomed-james"
+        },
+        "4/0/init/body/11/argument/1/3/1/5": {
+          "type": "element",
+          "hash": "80d5ae4d0ddcf0a2c06aeda7719967cd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Use GitHub's search syntax. The query will be automatically scoped to komo-tech/komo-platform."
+        },
+        "4/0/init/body/11/argument/1/3/3/1/1": {
+          "type": "element",
+          "hash": "983264917b55fdf3f868cf26c3d737bd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Number of Issues"
+        },
+        "4/0/init/body/11/argument/1/3/3/1/5": {
+          "type": "element",
+          "hash": "cd75826c048cb5faba88474deb16dceb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "(max 100)"
+        },
+        "4/0/init/body/11/argument/1/3/3/3/1": {
+          "type": "element",
+          "hash": "51478b6a1aa01b1181e03f742ccdb0ff",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Sort Order"
+        },
+        "4/0/init/body/11/argument/1/3/3/3/3/1": {
+          "type": "element",
+          "hash": "cf6d84bb052305753b0b295a6abe5dcd",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Newest First"
+        },
+        "4/0/init/body/11/argument/1/3/3/3/3/3": {
+          "type": "element",
+          "hash": "85b4e5a9899d16d0726139d7391d6921",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Oldest First"
+        },
+        "4/0/init/body/11/argument/1/3/5/1": {
+          "type": "element",
+          "hash": "bf466ea59ce7c7af3f72dec9c7e6d451",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Quick Templates"
+        },
+        "4/0/init/body/11/argument/1/3/7/1/3": {
+          "type": "element",
+          "hash": "3d10265927c9769c1958e60d72376bae",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "This will replace your current issue list"
+        },
+        "4/0/init/body/11/argument/1/3/7/3/1": {
+          "type": "element",
+          "hash": "5936f87dccc089542c7871a72ed1dacf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        }
+      }
+    },
+    "components/EmptyState.tsx": {
+      "scopes": {
+        "2/0/init/body/0/argument/1": {
+          "type": "element",
+          "hash": "f48ed7898fe499e74206f157d321f9a0",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Ready to Start Grooming?"
+        },
+        "2/0/init/body/0/argument/3": {
+          "type": "element",
+          "hash": "fc25992af40ca971963a0f7034b6cbe5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Use Command K to search and load issues from GitHub."
+        },
+        "2/0/init/body/0/argument/5/1/3": {
+          "type": "element",
+          "hash": "717686be221d6387db5a07f368338200",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Press"
+        },
+        "2/0/init/body/0/argument/5/1/5": {
+          "type": "element",
+          "hash": "59a141903af748938873fd73757936f4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "⌘K"
+        },
+        "2/0/init/body/0/argument/5/1/7": {
+          "type": "element",
+          "hash": "7b133c38bec0d5ee23cc6bcf9a8de50b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "or"
+        },
+        "2/0/init/body/0/argument/5/1/9": {
+          "type": "element",
+          "hash": "e688ed72e4a770eb2a3bdd7bdf185c87",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Ctrl+K"
+        },
+        "2/0/init/body/0/argument/5/3/3": {
+          "type": "element",
+          "hash": "249926a04eb8497fa0588ce4c2569f7b",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search & load GitHub issues"
+        },
+        "2/0/init/body/0/argument/7": {
+          "type": "element",
+          "hash": "43861dd40d99776a07deddfe42640a0e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Search by labels, dates, or any GitHub query syntax"
+        }
+      }
+    },
+    "components/IssueFormatter.tsx": {
+      "scopes": {
+        "3/0/init/body/1/argument/1": {
+          "type": "element",
+          "hash": "6bb346845bd0e803bb2a1f6687f03b21",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Standardized Issue Summary"
+        },
+        "3/0/init/body/1/argument/3/1": {
+          "type": "element",
+          "hash": "03272d61988ce34102c5afb223792959",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Name of Bug:"
+        },
+        "3/0/init/body/1/argument/3/3/expression/right": {
+          "type": "element",
+          "hash": "a09e4d61bbeb04b927406a50116445e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Not provided"
+        },
+        "3/0/init/body/1/argument/5/1": {
+          "type": "element",
+          "hash": "0d75a98ef137e95d2f3639b699b075df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority:"
+        },
+        "3/0/init/body/1/argument/5/3/expression/right": {
+          "type": "element",
+          "hash": "a09e4d61bbeb04b927406a50116445e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Not provided"
+        },
+        "3/0/init/body/1/argument/7/1": {
+          "type": "element",
+          "hash": "e095711d19851cb2ceb393b349ca0f47",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Description:"
+        },
+        "3/0/init/body/1/argument/7/3/1/expression/right": {
+          "type": "element",
+          "hash": "a09e4d61bbeb04b927406a50116445e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Not provided"
+        },
+        "3/0/init/body/1/argument/9/expression/right/1": {
+          "type": "element",
+          "hash": "9a6e6a6f9e4eff214d9db6822c3cb3c2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Links:"
+        },
+        "3/0/init/body/1/argument/9/expression/right/3/1/expression/0/body/1": {
+          "type": "element",
+          "hash": "85187d9f080dfa98ed18f83e2ff12f89",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{link.label}:"
+        },
+        "4/0/init/body/2/argument/1": {
+          "type": "element",
+          "hash": "6bb346845bd0e803bb2a1f6687f03b21",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Standardized Issue Summary"
+        },
+        "4/0/init/body/2/argument/3/1": {
+          "type": "element",
+          "hash": "03272d61988ce34102c5afb223792959",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Name of Bug:"
+        },
+        "4/0/init/body/2/argument/3/3/expression/right": {
+          "type": "element",
+          "hash": "a09e4d61bbeb04b927406a50116445e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Not provided"
+        },
+        "4/0/init/body/2/argument/5/1": {
+          "type": "element",
+          "hash": "0d75a98ef137e95d2f3639b699b075df",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority:"
+        },
+        "4/0/init/body/2/argument/5/3/expression/right": {
+          "type": "element",
+          "hash": "a09e4d61bbeb04b927406a50116445e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Not provided"
+        },
+        "4/0/init/body/2/argument/7/1": {
+          "type": "element",
+          "hash": "e095711d19851cb2ceb393b349ca0f47",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Description:"
+        },
+        "4/0/init/body/2/argument/7/3/1/expression/right": {
+          "type": "element",
+          "hash": "a09e4d61bbeb04b927406a50116445e2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Not provided"
+        },
+        "4/0/init/body/2/argument/9/1": {
+          "type": "element",
+          "hash": "9a6e6a6f9e4eff214d9db6822c3cb3c2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Links:"
+        },
+        "4/0/init/body/2/argument/9/3/1/expression/right": {
+          "type": "element",
+          "hash": "36ec96fea5213cd71a9f10ce4ced3230",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No links found"
+        },
+        "4/0/init/body/2/argument/9/expression/right/1": {
+          "type": "element",
+          "hash": "9a6e6a6f9e4eff214d9db6822c3cb3c2",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Links:"
+        }
+      }
+    },
+    "components/IssueNavigator.tsx": {
+      "scopes": {
+        "3/0/init/body/2/argument/1": {
+          "type": "element",
+          "hash": "13bceb5ac7d3991e76786b9ca7954624",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:ChevronLeft></element:ChevronLeft> Previous"
+        },
+        "3/0/init/body/2/argument/5": {
+          "type": "element",
+          "hash": "b27dd2bf7aab8adc7d4657801a2e4584",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Next<element:ChevronRight></element:ChevronRight>"
+        }
+      }
+    },
+    "components/IssueViewer.tsx": {
+      "scopes": {
+        "10/0/init/body/23/argument/1/1/1/1": {
+          "type": "element",
+          "hash": "7173b3ec6eab3bfe19d4a2e70bee8cf4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issue.user.login}/komo-platform"
+        },
+        "10/0/init/body/23/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "d6255eb39b86bb698d96bec92a0eb269",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "10/0/init/body/23/argument/1/1/1/5": {
+          "type": "element",
+          "hash": "6f150bceba8743e1338f494eaa6ca607",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "10/0/init/body/23/argument/1/3/1": {
+          "type": "element",
+          "hash": "a1a1396569fa779812420bbffb495d35",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issueNumber} of {totalIssues}"
+        },
+        "10/0/init/body/23/argument/1/3/5/1-aria-label": {
+          "type": "attribute",
+          "hash": "a351b2790dc17bda401a46d240d05332",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Select issue"
+        },
+        "10/0/init/body/23/argument/1/3/5/1/1": {
+          "type": "element",
+          "hash": "806722202f676d2de3d4f40e1c491ccb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "10/0/init/body/23/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/1": {
+          "type": "element",
+          "hash": "fc4aac8e2e2237e2f2c76fc5e1dc6c7f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issueItem.number}"
+        },
+        "10/0/init/body/23/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/3/3/3/expression/right": {
+          "type": "element",
+          "hash": "2286b28fa37112af76d6f5952c4b928e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "+<expression/>"
+        },
+        "10/0/init/body/23/argument/1/3/7/1-aria-label": {
+          "type": "attribute",
+          "hash": "370442962fd2d761b8a7497324a97d88",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Previous issue"
+        },
+        "10/0/init/body/23/argument/1/3/7/3-aria-label": {
+          "type": "attribute",
+          "hash": "0aff76ac1e261b6023caf132458c4e44",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Next issue"
+        },
+        "10/0/init/body/23/argument/3/3/1/1/expression/alternate/3": {
+          "type": "element",
+          "hash": "25de9112c8cd79cc5756032c173df230",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit Title"
+        },
+        "10/0/init/body/23/argument/3/3/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "10/0/init/body/23/argument/3/3/1/1/expression/consequent/5": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "10/0/init/body/23/argument/3/3/3/1": {
+          "type": "element",
+          "hash": "75c69459f7ef1db1123a41112b0bc6bc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Calendar></element:Calendar> Created: <function:formatDate/>"
+        },
+        "10/0/init/body/23/argument/3/3/3/3": {
+          "type": "element",
+          "hash": "6465c8f7a3b2d8cbb385a9b28b0e8685",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Clock></element:Clock> Updated: <function:formatDate/>"
+        },
+        "10/0/init/body/23/argument/3/3/5/1": {
+          "type": "element",
+          "hash": "5c0e045f9af83e041329869f00db435e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Issue Content"
+        },
+        "10/0/init/body/23/argument/3/3/5/9/1/expression/alternate": {
+          "type": "element",
+          "hash": "eee7f39ff90b18852afc1671f21fbaa9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit"
+        },
+        "10/0/init/body/23/argument/3/3/5/9/1/expression/consequent/1": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "10/0/init/body/23/argument/3/7/1/1": {
+          "type": "element",
+          "hash": "0b062687108df307445af848763e4ce5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority"
+        },
+        "10/0/init/body/23/argument/3/7/3/1": {
+          "type": "element",
+          "hash": "6f15627a90002323eac018274b6922d6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Labels"
+        },
+        "10/0/init/body/23/argument/3/7/5/1": {
+          "type": "element",
+          "hash": "c46571856723b03262fd33f511116298",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Actions"
+        },
+        "10/0/init/body/23/argument/3/7/5/3/1": {
+          "type": "element",
+          "hash": "fedc6de2faa6b7189ff59ced99c19654",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "10/0/init/body/23/argument/3/7/5/3/3": {
+          "type": "element",
+          "hash": "421f1058a2c6794435ad08eaf7963143",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Check></element:Check> Mark as Complete"
+        },
+        "10/0/init/body/23/argument/3/7/5/3/5": {
+          "type": "element",
+          "hash": "221786f48a0dfba685961eeb76f41299",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:X></element:X> Close as Not Planned"
+        },
+        "10/0/init/body/23/argument/3/7/5/3/5-title": {
+          "type": "attribute",
+          "hash": "91681765c4b26749e257f722f7c74882",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Close this issue as not planned"
+        },
+        "10/0/init/body/23/argument/3/7/7/1": {
+          "type": "element",
+          "hash": "ef00d7494b69def6841620bd6554d040",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Keyboard Shortcuts"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/1": {
+          "type": "element",
+          "hash": "1b2eb596fd1426f105d810d5c299a24c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + ←</element:kbd> Previous issue"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/11": {
+          "type": "element",
+          "hash": "9d5912e3816292b38f280e81d8e50018",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + O</element:kbd> Open on GitHub"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/13": {
+          "type": "element",
+          "hash": "c9d278eb85a1a1fa703ec8e7e864acc6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + H</element:kbd> Set high priority"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/15": {
+          "type": "element",
+          "hash": "3837fcfbe1c4ec3129fb96362dcbb7d7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + M</element:kbd> Set medium priority"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/17": {
+          "type": "element",
+          "hash": "ee1bb44de21f96694eda4cc8241253cb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + L</element:kbd> Set low priority"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/19": {
+          "type": "element",
+          "hash": "2795f2a0febf119c3c98ceebf8994ff7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + X</element:kbd> Close as not planned"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/3": {
+          "type": "element",
+          "hash": "2b4b3c78e662a0373ab826d999a4f8a3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + →</element:kbd> Next issue"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/5": {
+          "type": "element",
+          "hash": "1f8934acdb744c45ce2efa610ef507d3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + E</element:kbd> Edit description"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/7": {
+          "type": "element",
+          "hash": "a5096bc3161827b4cf67375d660b580a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + S</element:kbd> Save changes"
+        },
+        "10/0/init/body/23/argument/3/7/7/3/9": {
+          "type": "element",
+          "hash": "bc0b927ffddb4bf0c313c4a5c4bf7493",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + C</element:kbd> Mark as complete"
+        },
+        "10/0/init/body/23/argument/7/expression/right/1/1": {
+          "type": "element",
+          "hash": "fa6801ca6c4ac92a8dba0a9133d18609",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Unsaved Changes"
+        },
+        "10/0/init/body/23/argument/7/expression/right/1/3": {
+          "type": "element",
+          "hash": "a4d5acd43aab0b6e56c0f5bc57d7611d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You have unsaved changes. What would you like to do?"
+        },
+        "10/0/init/body/23/argument/7/expression/right/1/5/1": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "10/0/init/body/23/argument/7/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "de83a114a79d086e372c43dbfe9f47b4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Discard"
+        },
+        "10/0/init/body/23/argument/7/expression/right/1/5/5": {
+          "type": "element",
+          "hash": "15c8dfd37fa11b179557ebee647d0763",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Continue Editing"
+        },
+        "10/0/init/body/24/argument/1/1/1/1": {
+          "type": "element",
+          "hash": "7173b3ec6eab3bfe19d4a2e70bee8cf4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issue.user.login}/komo-platform"
+        },
+        "10/0/init/body/24/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "d6255eb39b86bb698d96bec92a0eb269",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "10/0/init/body/24/argument/1/1/1/5": {
+          "type": "element",
+          "hash": "6f150bceba8743e1338f494eaa6ca607",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "10/0/init/body/24/argument/1/3/1": {
+          "type": "element",
+          "hash": "a1a1396569fa779812420bbffb495d35",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issueNumber} of {totalIssues}"
+        },
+        "10/0/init/body/24/argument/1/3/5/1-aria-label": {
+          "type": "attribute",
+          "hash": "a351b2790dc17bda401a46d240d05332",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Select issue"
+        },
+        "10/0/init/body/24/argument/1/3/5/1/1": {
+          "type": "element",
+          "hash": "806722202f676d2de3d4f40e1c491ccb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "10/0/init/body/24/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/1": {
+          "type": "element",
+          "hash": "fc4aac8e2e2237e2f2c76fc5e1dc6c7f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issueItem.number}"
+        },
+        "10/0/init/body/24/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/3/3/3/expression/right": {
+          "type": "element",
+          "hash": "2286b28fa37112af76d6f5952c4b928e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "+<expression/>"
+        },
+        "10/0/init/body/24/argument/1/3/7/1-aria-label": {
+          "type": "attribute",
+          "hash": "370442962fd2d761b8a7497324a97d88",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Previous issue"
+        },
+        "10/0/init/body/24/argument/1/3/7/3-aria-label": {
+          "type": "attribute",
+          "hash": "0aff76ac1e261b6023caf132458c4e44",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Next issue"
+        },
+        "10/0/init/body/24/argument/3/3/1/1/expression/alternate/3": {
+          "type": "element",
+          "hash": "25de9112c8cd79cc5756032c173df230",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit Title"
+        },
+        "10/0/init/body/24/argument/3/3/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "10/0/init/body/24/argument/3/3/1/1/expression/consequent/5": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "10/0/init/body/24/argument/3/3/3/1": {
+          "type": "element",
+          "hash": "75c69459f7ef1db1123a41112b0bc6bc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Calendar></element:Calendar> Created: <function:formatDate/>"
+        },
+        "10/0/init/body/24/argument/3/3/3/3": {
+          "type": "element",
+          "hash": "6465c8f7a3b2d8cbb385a9b28b0e8685",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Clock></element:Clock> Updated: <function:formatDate/>"
+        },
+        "10/0/init/body/24/argument/3/3/5/1": {
+          "type": "element",
+          "hash": "5c0e045f9af83e041329869f00db435e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Issue Content"
+        },
+        "10/0/init/body/24/argument/3/3/5/9/1/expression/alternate": {
+          "type": "element",
+          "hash": "eee7f39ff90b18852afc1671f21fbaa9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit"
+        },
+        "10/0/init/body/24/argument/3/3/5/9/1/expression/consequent/1": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "10/0/init/body/24/argument/3/7/1/1": {
+          "type": "element",
+          "hash": "0b062687108df307445af848763e4ce5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority"
+        },
+        "10/0/init/body/24/argument/3/7/3/1": {
+          "type": "element",
+          "hash": "6f15627a90002323eac018274b6922d6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Labels"
+        },
+        "10/0/init/body/24/argument/3/7/5/1": {
+          "type": "element",
+          "hash": "c46571856723b03262fd33f511116298",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Actions"
+        },
+        "10/0/init/body/24/argument/3/7/5/3/1": {
+          "type": "element",
+          "hash": "fedc6de2faa6b7189ff59ced99c19654",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "10/0/init/body/24/argument/3/7/5/3/3": {
+          "type": "element",
+          "hash": "421f1058a2c6794435ad08eaf7963143",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Check></element:Check> Mark as Complete"
+        },
+        "10/0/init/body/24/argument/3/7/5/3/5": {
+          "type": "element",
+          "hash": "221786f48a0dfba685961eeb76f41299",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:X></element:X> Close as Not Planned"
+        },
+        "10/0/init/body/24/argument/3/7/5/3/5-title": {
+          "type": "attribute",
+          "hash": "91681765c4b26749e257f722f7c74882",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Close this issue as not planned"
+        },
+        "10/0/init/body/24/argument/3/7/7/1": {
+          "type": "element",
+          "hash": "ef00d7494b69def6841620bd6554d040",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Keyboard Shortcuts"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/1": {
+          "type": "element",
+          "hash": "1b2eb596fd1426f105d810d5c299a24c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + ←</element:kbd> Previous issue"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/11": {
+          "type": "element",
+          "hash": "9d5912e3816292b38f280e81d8e50018",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + O</element:kbd> Open on GitHub"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/13": {
+          "type": "element",
+          "hash": "c9d278eb85a1a1fa703ec8e7e864acc6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + H</element:kbd> Set high priority"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/15": {
+          "type": "element",
+          "hash": "3837fcfbe1c4ec3129fb96362dcbb7d7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + M</element:kbd> Set medium priority"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/17": {
+          "type": "element",
+          "hash": "ee1bb44de21f96694eda4cc8241253cb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + L</element:kbd> Set low priority"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/19": {
+          "type": "element",
+          "hash": "2795f2a0febf119c3c98ceebf8994ff7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + X</element:kbd> Close as not planned"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/3": {
+          "type": "element",
+          "hash": "2b4b3c78e662a0373ab826d999a4f8a3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + →</element:kbd> Next issue"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/5": {
+          "type": "element",
+          "hash": "1f8934acdb744c45ce2efa610ef507d3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + E</element:kbd> Edit description"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/7": {
+          "type": "element",
+          "hash": "a5096bc3161827b4cf67375d660b580a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + S</element:kbd> Save changes"
+        },
+        "10/0/init/body/24/argument/3/7/7/3/9": {
+          "type": "element",
+          "hash": "bc0b927ffddb4bf0c313c4a5c4bf7493",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + C</element:kbd> Mark as complete"
+        },
+        "10/0/init/body/24/argument/7/expression/right/1/1": {
+          "type": "element",
+          "hash": "fa6801ca6c4ac92a8dba0a9133d18609",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Unsaved Changes"
+        },
+        "10/0/init/body/24/argument/7/expression/right/1/3": {
+          "type": "element",
+          "hash": "a4d5acd43aab0b6e56c0f5bc57d7611d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You have unsaved changes. What would you like to do?"
+        },
+        "10/0/init/body/24/argument/7/expression/right/1/5/1": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "10/0/init/body/24/argument/7/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "de83a114a79d086e372c43dbfe9f47b4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Discard"
+        },
+        "10/0/init/body/24/argument/7/expression/right/1/5/5": {
+          "type": "element",
+          "hash": "15c8dfd37fa11b179557ebee647d0763",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Continue Editing"
+        },
+        "9/0/init/body/23/argument/1/1/1/1": {
+          "type": "element",
+          "hash": "7173b3ec6eab3bfe19d4a2e70bee8cf4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issue.user.login}/komo-platform"
+        },
+        "9/0/init/body/23/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "d6255eb39b86bb698d96bec92a0eb269",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "9/0/init/body/23/argument/1/1/1/5": {
+          "type": "element",
+          "hash": "6f150bceba8743e1338f494eaa6ca607",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "9/0/init/body/23/argument/1/3/1": {
+          "type": "element",
+          "hash": "a1a1396569fa779812420bbffb495d35",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issueNumber} of {totalIssues}"
+        },
+        "9/0/init/body/23/argument/1/3/5/1-aria-label": {
+          "type": "attribute",
+          "hash": "a351b2790dc17bda401a46d240d05332",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Select issue"
+        },
+        "9/0/init/body/23/argument/1/3/5/1/1": {
+          "type": "element",
+          "hash": "806722202f676d2de3d4f40e1c491ccb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "9/0/init/body/23/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/1": {
+          "type": "element",
+          "hash": "fc4aac8e2e2237e2f2c76fc5e1dc6c7f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issueItem.number}"
+        },
+        "9/0/init/body/23/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/3/3/3/expression/right": {
+          "type": "element",
+          "hash": "2286b28fa37112af76d6f5952c4b928e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "+<expression/>"
+        },
+        "9/0/init/body/23/argument/1/3/7/1-aria-label": {
+          "type": "attribute",
+          "hash": "370442962fd2d761b8a7497324a97d88",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Previous issue"
+        },
+        "9/0/init/body/23/argument/1/3/7/3-aria-label": {
+          "type": "attribute",
+          "hash": "0aff76ac1e261b6023caf132458c4e44",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Next issue"
+        },
+        "9/0/init/body/23/argument/3/3/1/1/expression/alternate/3": {
+          "type": "element",
+          "hash": "25de9112c8cd79cc5756032c173df230",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit Title"
+        },
+        "9/0/init/body/23/argument/3/3/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "9/0/init/body/23/argument/3/3/1/1/expression/consequent/5": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "9/0/init/body/23/argument/3/3/3/1": {
+          "type": "element",
+          "hash": "75c69459f7ef1db1123a41112b0bc6bc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Calendar></element:Calendar> Created: <function:formatDate/>"
+        },
+        "9/0/init/body/23/argument/3/3/3/3": {
+          "type": "element",
+          "hash": "6465c8f7a3b2d8cbb385a9b28b0e8685",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Clock></element:Clock> Updated: <function:formatDate/>"
+        },
+        "9/0/init/body/23/argument/3/3/5/1": {
+          "type": "element",
+          "hash": "5c0e045f9af83e041329869f00db435e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Issue Content"
+        },
+        "9/0/init/body/23/argument/3/3/5/5/1/expression/alternate": {
+          "type": "element",
+          "hash": "eee7f39ff90b18852afc1671f21fbaa9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit"
+        },
+        "9/0/init/body/23/argument/3/3/5/5/1/expression/consequent/1": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "9/0/init/body/23/argument/3/3/5/7/1/expression/alternate": {
+          "type": "element",
+          "hash": "eee7f39ff90b18852afc1671f21fbaa9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit"
+        },
+        "9/0/init/body/23/argument/3/3/5/7/1/expression/consequent/1": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "9/0/init/body/23/argument/3/7/1/1": {
+          "type": "element",
+          "hash": "0b062687108df307445af848763e4ce5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority"
+        },
+        "9/0/init/body/23/argument/3/7/3/1": {
+          "type": "element",
+          "hash": "6f15627a90002323eac018274b6922d6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Labels"
+        },
+        "9/0/init/body/23/argument/3/7/5/1": {
+          "type": "element",
+          "hash": "c46571856723b03262fd33f511116298",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Actions"
+        },
+        "9/0/init/body/23/argument/3/7/5/3/1": {
+          "type": "element",
+          "hash": "fedc6de2faa6b7189ff59ced99c19654",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "9/0/init/body/23/argument/3/7/5/3/3": {
+          "type": "element",
+          "hash": "421f1058a2c6794435ad08eaf7963143",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Check></element:Check> Mark as Complete"
+        },
+        "9/0/init/body/23/argument/3/7/5/3/5": {
+          "type": "element",
+          "hash": "221786f48a0dfba685961eeb76f41299",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:X></element:X> Close as Not Planned"
+        },
+        "9/0/init/body/23/argument/3/7/5/3/5-title": {
+          "type": "attribute",
+          "hash": "91681765c4b26749e257f722f7c74882",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Close this issue as not planned"
+        },
+        "9/0/init/body/23/argument/3/7/7/1": {
+          "type": "element",
+          "hash": "ef00d7494b69def6841620bd6554d040",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Keyboard Shortcuts"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/1": {
+          "type": "element",
+          "hash": "1b2eb596fd1426f105d810d5c299a24c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + ←</element:kbd> Previous issue"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/11": {
+          "type": "element",
+          "hash": "9d5912e3816292b38f280e81d8e50018",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + O</element:kbd> Open on GitHub"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/13": {
+          "type": "element",
+          "hash": "c9d278eb85a1a1fa703ec8e7e864acc6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + H</element:kbd> Set high priority"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/15": {
+          "type": "element",
+          "hash": "3837fcfbe1c4ec3129fb96362dcbb7d7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + M</element:kbd> Set medium priority"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/17": {
+          "type": "element",
+          "hash": "ee1bb44de21f96694eda4cc8241253cb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + L</element:kbd> Set low priority"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/19": {
+          "type": "element",
+          "hash": "2795f2a0febf119c3c98ceebf8994ff7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + X</element:kbd> Close as not planned"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/3": {
+          "type": "element",
+          "hash": "2b4b3c78e662a0373ab826d999a4f8a3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + →</element:kbd> Next issue"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/5": {
+          "type": "element",
+          "hash": "1f8934acdb744c45ce2efa610ef507d3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + E</element:kbd> Edit description"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/7": {
+          "type": "element",
+          "hash": "a5096bc3161827b4cf67375d660b580a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + S</element:kbd> Save changes"
+        },
+        "9/0/init/body/23/argument/3/7/7/3/9": {
+          "type": "element",
+          "hash": "bc0b927ffddb4bf0c313c4a5c4bf7493",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + C</element:kbd> Mark as complete"
+        },
+        "9/0/init/body/23/argument/7/expression/right/1/1": {
+          "type": "element",
+          "hash": "fa6801ca6c4ac92a8dba0a9133d18609",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Unsaved Changes"
+        },
+        "9/0/init/body/23/argument/7/expression/right/1/3": {
+          "type": "element",
+          "hash": "a4d5acd43aab0b6e56c0f5bc57d7611d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You have unsaved changes. What would you like to do?"
+        },
+        "9/0/init/body/23/argument/7/expression/right/1/5/1": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "9/0/init/body/23/argument/7/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "de83a114a79d086e372c43dbfe9f47b4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Discard"
+        },
+        "9/0/init/body/23/argument/7/expression/right/1/5/5": {
+          "type": "element",
+          "hash": "15c8dfd37fa11b179557ebee647d0763",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Continue Editing"
+        },
+        "9/0/init/body/29/argument/1/1/1/1": {
+          "type": "element",
+          "hash": "7173b3ec6eab3bfe19d4a2e70bee8cf4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issue.user.login}/komo-platform"
+        },
+        "9/0/init/body/29/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "d6255eb39b86bb698d96bec92a0eb269",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "9/0/init/body/29/argument/1/1/1/5": {
+          "type": "element",
+          "hash": "6f150bceba8743e1338f494eaa6ca607",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "9/0/init/body/29/argument/1/3/1": {
+          "type": "element",
+          "hash": "a1a1396569fa779812420bbffb495d35",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issueNumber} of {totalIssues}"
+        },
+        "9/0/init/body/29/argument/1/3/5/1-aria-label": {
+          "type": "attribute",
+          "hash": "a351b2790dc17bda401a46d240d05332",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Select issue"
+        },
+        "9/0/init/body/29/argument/1/3/5/1/1": {
+          "type": "element",
+          "hash": "806722202f676d2de3d4f40e1c491ccb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "9/0/init/body/29/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/1": {
+          "type": "element",
+          "hash": "fc4aac8e2e2237e2f2c76fc5e1dc6c7f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issueItem.number}"
+        },
+        "9/0/init/body/29/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/3/3/3/expression/right": {
+          "type": "element",
+          "hash": "2286b28fa37112af76d6f5952c4b928e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "+<expression/>"
+        },
+        "9/0/init/body/29/argument/1/3/7/1-aria-label": {
+          "type": "attribute",
+          "hash": "370442962fd2d761b8a7497324a97d88",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Previous issue"
+        },
+        "9/0/init/body/29/argument/1/3/7/3-aria-label": {
+          "type": "attribute",
+          "hash": "0aff76ac1e261b6023caf132458c4e44",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Next issue"
+        },
+        "9/0/init/body/29/argument/3/3/1/1/expression/alternate/3": {
+          "type": "element",
+          "hash": "25de9112c8cd79cc5756032c173df230",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit Title"
+        },
+        "9/0/init/body/29/argument/3/3/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "9/0/init/body/29/argument/3/3/1/1/expression/consequent/5": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "9/0/init/body/29/argument/3/3/3/1": {
+          "type": "element",
+          "hash": "75c69459f7ef1db1123a41112b0bc6bc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Calendar></element:Calendar> Created: <function:formatDate/>"
+        },
+        "9/0/init/body/29/argument/3/3/3/3": {
+          "type": "element",
+          "hash": "6465c8f7a3b2d8cbb385a9b28b0e8685",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Clock></element:Clock> Updated: <function:formatDate/>"
+        },
+        "9/0/init/body/29/argument/3/3/5/1": {
+          "type": "element",
+          "hash": "5c0e045f9af83e041329869f00db435e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Issue Content"
+        },
+        "9/0/init/body/29/argument/3/3/5/11/expression/right/1/1": {
+          "type": "element",
+          "hash": "a16cebe212501d0bf471ce268c68904c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "AI-Formatted Issue"
+        },
+        "9/0/init/body/29/argument/3/3/5/11/expression/right/1/5/1": {
+          "type": "element",
+          "hash": "c2f298165cbfc17041b795065bfeb57c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Dismiss"
+        },
+        "9/0/init/body/29/argument/3/3/5/11/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "0f03e8e3752eb120bf8ea0b8f8f5d244",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Apply"
+        },
+        "9/0/init/body/29/argument/3/3/5/3": {
+          "type": "element",
+          "hash": "158160e44dc190c9beaded2949fcd9d8",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Format with AI"
+        },
+        "9/0/init/body/29/argument/3/3/5/7/1/expression/alternate": {
+          "type": "element",
+          "hash": "eee7f39ff90b18852afc1671f21fbaa9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit"
+        },
+        "9/0/init/body/29/argument/3/3/5/7/1/expression/consequent/1": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "9/0/init/body/29/argument/3/7/1/1": {
+          "type": "element",
+          "hash": "0b062687108df307445af848763e4ce5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority"
+        },
+        "9/0/init/body/29/argument/3/7/3/1": {
+          "type": "element",
+          "hash": "6f15627a90002323eac018274b6922d6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Labels"
+        },
+        "9/0/init/body/29/argument/3/7/5/1": {
+          "type": "element",
+          "hash": "c46571856723b03262fd33f511116298",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Actions"
+        },
+        "9/0/init/body/29/argument/3/7/5/3/1": {
+          "type": "element",
+          "hash": "fedc6de2faa6b7189ff59ced99c19654",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "9/0/init/body/29/argument/3/7/5/3/3": {
+          "type": "element",
+          "hash": "421f1058a2c6794435ad08eaf7963143",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Check></element:Check> Mark as Complete"
+        },
+        "9/0/init/body/29/argument/3/7/5/3/5": {
+          "type": "element",
+          "hash": "221786f48a0dfba685961eeb76f41299",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:X></element:X> Close as Not Planned"
+        },
+        "9/0/init/body/29/argument/3/7/5/3/5-title": {
+          "type": "attribute",
+          "hash": "91681765c4b26749e257f722f7c74882",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Close this issue as not planned"
+        },
+        "9/0/init/body/29/argument/3/7/7/1": {
+          "type": "element",
+          "hash": "ef00d7494b69def6841620bd6554d040",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Keyboard Shortcuts"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/1": {
+          "type": "element",
+          "hash": "1b2eb596fd1426f105d810d5c299a24c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + ←</element:kbd> Previous issue"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/11": {
+          "type": "element",
+          "hash": "9d5912e3816292b38f280e81d8e50018",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + O</element:kbd> Open on GitHub"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/13": {
+          "type": "element",
+          "hash": "c9d278eb85a1a1fa703ec8e7e864acc6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + H</element:kbd> Set high priority"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/15": {
+          "type": "element",
+          "hash": "3837fcfbe1c4ec3129fb96362dcbb7d7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + M</element:kbd> Set medium priority"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/17": {
+          "type": "element",
+          "hash": "ee1bb44de21f96694eda4cc8241253cb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + L</element:kbd> Set low priority"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/19": {
+          "type": "element",
+          "hash": "2795f2a0febf119c3c98ceebf8994ff7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + X</element:kbd> Close as not planned"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/3": {
+          "type": "element",
+          "hash": "2b4b3c78e662a0373ab826d999a4f8a3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + →</element:kbd> Next issue"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/5": {
+          "type": "element",
+          "hash": "1f8934acdb744c45ce2efa610ef507d3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + E</element:kbd> Edit description"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/7": {
+          "type": "element",
+          "hash": "a5096bc3161827b4cf67375d660b580a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + S</element:kbd> Save changes"
+        },
+        "9/0/init/body/29/argument/3/7/7/3/9": {
+          "type": "element",
+          "hash": "bc0b927ffddb4bf0c313c4a5c4bf7493",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + C</element:kbd> Mark as complete"
+        },
+        "9/0/init/body/29/argument/7/expression/right/1/1": {
+          "type": "element",
+          "hash": "fa6801ca6c4ac92a8dba0a9133d18609",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Unsaved Changes"
+        },
+        "9/0/init/body/29/argument/7/expression/right/1/3": {
+          "type": "element",
+          "hash": "a4d5acd43aab0b6e56c0f5bc57d7611d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You have unsaved changes. What would you like to do?"
+        },
+        "9/0/init/body/29/argument/7/expression/right/1/5/1": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "9/0/init/body/29/argument/7/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "de83a114a79d086e372c43dbfe9f47b4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Discard"
+        },
+        "9/0/init/body/29/argument/7/expression/right/1/5/5": {
+          "type": "element",
+          "hash": "15c8dfd37fa11b179557ebee647d0763",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Continue Editing"
+        },
+        "9/0/init/body/30/argument/1/1/1/1": {
+          "type": "element",
+          "hash": "7173b3ec6eab3bfe19d4a2e70bee8cf4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issue.user.login}/komo-platform"
+        },
+        "9/0/init/body/30/argument/1/1/1/3": {
+          "type": "element",
+          "hash": "d6255eb39b86bb698d96bec92a0eb269",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "9/0/init/body/30/argument/1/1/1/5": {
+          "type": "element",
+          "hash": "6f150bceba8743e1338f494eaa6ca607",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "9/0/init/body/30/argument/1/3/1": {
+          "type": "element",
+          "hash": "a1a1396569fa779812420bbffb495d35",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{issueNumber} of {totalIssues}"
+        },
+        "9/0/init/body/30/argument/1/3/5/1-aria-label": {
+          "type": "attribute",
+          "hash": "a351b2790dc17bda401a46d240d05332",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Select issue"
+        },
+        "9/0/init/body/30/argument/1/3/5/1/1": {
+          "type": "element",
+          "hash": "806722202f676d2de3d4f40e1c491ccb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issue.number}"
+        },
+        "9/0/init/body/30/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/1": {
+          "type": "element",
+          "hash": "fc4aac8e2e2237e2f2c76fc5e1dc6c7f",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "#{issueItem.number}"
+        },
+        "9/0/init/body/30/argument/1/3/5/3/expression/right/1/1/expression/0/body/1/3/3/3/expression/right": {
+          "type": "element",
+          "hash": "2286b28fa37112af76d6f5952c4b928e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "+<expression/>"
+        },
+        "9/0/init/body/30/argument/1/3/7/1-aria-label": {
+          "type": "attribute",
+          "hash": "370442962fd2d761b8a7497324a97d88",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Previous issue"
+        },
+        "9/0/init/body/30/argument/1/3/7/3-aria-label": {
+          "type": "attribute",
+          "hash": "0aff76ac1e261b6023caf132458c4e44",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Next issue"
+        },
+        "9/0/init/body/30/argument/3/3/1/1/expression/alternate/3": {
+          "type": "element",
+          "hash": "25de9112c8cd79cc5756032c173df230",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit Title"
+        },
+        "9/0/init/body/30/argument/3/3/1/1/expression/consequent/3": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "9/0/init/body/30/argument/3/3/1/1/expression/consequent/5": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "9/0/init/body/30/argument/3/3/3/1": {
+          "type": "element",
+          "hash": "75c69459f7ef1db1123a41112b0bc6bc",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Calendar></element:Calendar> Created: <function:formatDate/>"
+        },
+        "9/0/init/body/30/argument/3/3/3/3": {
+          "type": "element",
+          "hash": "6465c8f7a3b2d8cbb385a9b28b0e8685",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Clock></element:Clock> Updated: <function:formatDate/>"
+        },
+        "9/0/init/body/30/argument/3/3/5/1": {
+          "type": "element",
+          "hash": "5c0e045f9af83e041329869f00db435e",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Issue Content"
+        },
+        "9/0/init/body/30/argument/3/3/5/11/expression/right/1/1": {
+          "type": "element",
+          "hash": "a16cebe212501d0bf471ce268c68904c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "AI-Formatted Issue"
+        },
+        "9/0/init/body/30/argument/3/3/5/11/expression/right/1/5/1": {
+          "type": "element",
+          "hash": "c2f298165cbfc17041b795065bfeb57c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Dismiss"
+        },
+        "9/0/init/body/30/argument/3/3/5/11/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "0f03e8e3752eb120bf8ea0b8f8f5d244",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Apply"
+        },
+        "9/0/init/body/30/argument/3/3/5/3": {
+          "type": "element",
+          "hash": "158160e44dc190c9beaded2949fcd9d8",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Format with AI"
+        },
+        "9/0/init/body/30/argument/3/3/5/7/1/expression/alternate": {
+          "type": "element",
+          "hash": "eee7f39ff90b18852afc1671f21fbaa9",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Edit"
+        },
+        "9/0/init/body/30/argument/3/3/5/7/1/expression/consequent/1": {
+          "type": "element",
+          "hash": "2e2a849c2223911717de8caa2c71bade",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "9/0/init/body/30/argument/3/7/1/1": {
+          "type": "element",
+          "hash": "0b062687108df307445af848763e4ce5",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Priority"
+        },
+        "9/0/init/body/30/argument/3/7/3/1": {
+          "type": "element",
+          "hash": "6f15627a90002323eac018274b6922d6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Labels"
+        },
+        "9/0/init/body/30/argument/3/7/5/1": {
+          "type": "element",
+          "hash": "c46571856723b03262fd33f511116298",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Actions"
+        },
+        "9/0/init/body/30/argument/3/7/5/3/1": {
+          "type": "element",
+          "hash": "fedc6de2faa6b7189ff59ced99c19654",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "View on GitHub"
+        },
+        "9/0/init/body/30/argument/3/7/5/3/3": {
+          "type": "element",
+          "hash": "421f1058a2c6794435ad08eaf7963143",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Check></element:Check> Mark as Complete"
+        },
+        "9/0/init/body/30/argument/3/7/5/3/5": {
+          "type": "element",
+          "hash": "221786f48a0dfba685961eeb76f41299",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:X></element:X> Close as Not Planned"
+        },
+        "9/0/init/body/30/argument/3/7/5/3/5-title": {
+          "type": "attribute",
+          "hash": "91681765c4b26749e257f722f7c74882",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Close this issue as not planned"
+        },
+        "9/0/init/body/30/argument/3/7/7/1": {
+          "type": "element",
+          "hash": "ef00d7494b69def6841620bd6554d040",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Keyboard Shortcuts"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/1": {
+          "type": "element",
+          "hash": "1b2eb596fd1426f105d810d5c299a24c",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + ←</element:kbd> Previous issue"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/11": {
+          "type": "element",
+          "hash": "9d5912e3816292b38f280e81d8e50018",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + O</element:kbd> Open on GitHub"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/13": {
+          "type": "element",
+          "hash": "c9d278eb85a1a1fa703ec8e7e864acc6",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + H</element:kbd> Set high priority"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/15": {
+          "type": "element",
+          "hash": "3837fcfbe1c4ec3129fb96362dcbb7d7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + M</element:kbd> Set medium priority"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/17": {
+          "type": "element",
+          "hash": "ee1bb44de21f96694eda4cc8241253cb",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + L</element:kbd> Set low priority"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/19": {
+          "type": "element",
+          "hash": "2795f2a0febf119c3c98ceebf8994ff7",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + X</element:kbd> Close as not planned"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/3": {
+          "type": "element",
+          "hash": "2b4b3c78e662a0373ab826d999a4f8a3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Alt + →</element:kbd> Next issue"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/5": {
+          "type": "element",
+          "hash": "1f8934acdb744c45ce2efa610ef507d3",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + E</element:kbd> Edit description"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/7": {
+          "type": "element",
+          "hash": "a5096bc3161827b4cf67375d660b580a",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + S</element:kbd> Save changes"
+        },
+        "9/0/init/body/30/argument/3/7/7/3/9": {
+          "type": "element",
+          "hash": "bc0b927ffddb4bf0c313c4a5c4bf7493",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:kbd>Ctrl + C</element:kbd> Mark as complete"
+        },
+        "9/0/init/body/30/argument/7/expression/right/1/1": {
+          "type": "element",
+          "hash": "fa6801ca6c4ac92a8dba0a9133d18609",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Unsaved Changes"
+        },
+        "9/0/init/body/30/argument/7/expression/right/1/3": {
+          "type": "element",
+          "hash": "a4d5acd43aab0b6e56c0f5bc57d7611d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "You have unsaved changes. What would you like to do?"
+        },
+        "9/0/init/body/30/argument/7/expression/right/1/5/1": {
+          "type": "element",
+          "hash": "f7a2929f33bc420195e59ac5a8bcd454",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Save"
+        },
+        "9/0/init/body/30/argument/7/expression/right/1/5/3": {
+          "type": "element",
+          "hash": "de83a114a79d086e372c43dbfe9f47b4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Discard"
+        },
+        "9/0/init/body/30/argument/7/expression/right/1/5/5": {
+          "type": "element",
+          "hash": "15c8dfd37fa11b179557ebee647d0763",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Continue Editing"
+        }
+      }
+    },
+    "components/LabelManager.tsx": {
+      "scopes": {
+        "6/0/init/body/12/argument/1/1/expression/consequent": {
+          "type": "element",
+          "hash": "bfdc7880139f5f2596d7d4b64410e263",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "No labels"
+        },
+        "6/0/init/body/12/argument/3/expression/alternate/1/1/1": {
+          "type": "element",
+          "hash": "682eade7443c047bc680664f821c9e0d",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Label Name"
+        },
+        "6/0/init/body/12/argument/3/expression/alternate/1/1/3-placeholder": {
+          "type": "attribute",
+          "hash": "0f99d52c949a0395fb923bd5aa60bcef",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Select label"
+        },
+        "6/0/init/body/12/argument/3/expression/alternate/3/1": {
+          "type": "element",
+          "hash": "07296eb8d91ad98e1b60cd7ab0def914",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Cancel"
+        },
+        "6/0/init/body/12/argument/3/expression/alternate/3/3": {
+          "type": "element",
+          "hash": "c77dea457373a92692a81254d1271748",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "Add"
+        },
+        "6/0/init/body/12/argument/3/expression/consequent": {
+          "type": "element",
+          "hash": "52a62521c157dfbaad405882ee33ddca",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Plus></element:Plus> Add label"
+        }
+      }
+    },
+    "components/MarkdownEditor.tsx": {
+      "scopes": {
+        "2/0/init/body/4/argument/3": {
+          "type": "element",
+          "hash": "41209136f4d5311362b7957abec99edf",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "{safeValue.length} characters"
+        }
+      }
+    },
+    "components/MarkdownPreview.tsx": {
+      "scopes": {
+        "4/0/init/body/0/argument/1/openingElement/1/value/expression/0/value/body/0/consequent/0/argument": {
+          "type": "element",
+          "hash": "bdeca99e9da6e3328d42617fc6b076b4",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "[View image on GitHub]"
+        }
+      }
+    },
+    "components/Navigation.tsx": {
+      "scopes": {
+        "4/0/init/body/0/argument/1/1": {
+          "type": "element",
+          "hash": "8160e0ec4dc43f958747a961c2e3f985",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "James' Magical Backlog Groomer"
+        },
+        "4/0/init/body/0/argument/1/3/1/1": {
+          "type": "element",
+          "hash": "95c8e8e5b2016db2cf0930b8c55d21fe",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Target></element:Target> Grooming"
+        },
+        "4/0/init/body/0/argument/1/3/1/3": {
+          "type": "element",
+          "hash": "df7c5eeb33616da1f10d99cbe0ac9a04",
+          "context": "",
+          "skip": false,
+          "overrides": {},
+          "content": "<element:Activity></element:Activity> Health"
+        }
+      }
+    }
+  }
+}
