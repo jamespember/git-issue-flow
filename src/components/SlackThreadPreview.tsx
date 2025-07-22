@@ -338,12 +338,14 @@ const SlackThreadPreview: React.FC<SlackThreadPreviewProps> = ({
                         {message.files && message.files.length > 0 && (
                           <div className="mt-2 flex flex-wrap gap-2">
                             {message.files.filter(f => f.mimetype && f.mimetype.startsWith('image/')).map((file, i) => {
+                              const config = ConfigService.load();
+                              const slackToken = config.slack?.botToken || '';
                               const isSlackFile = file.url_private.startsWith('https://files.slack.com/');
                               const proxyUrl = isSlackFile
-                                ? `/api/slack-proxy/image?url=${encodeURIComponent(file.thumb_360 || file.url_private)}`
+                                ? `/api/slack-proxy/image?url=${encodeURIComponent(file.thumb_360 || file.url_private)}&token=${encodeURIComponent(slackToken)}`
                                 : (file.thumb_360 || file.url_private);
                               const fullProxyUrl = isSlackFile
-                                ? `/api/slack-proxy/image?url=${encodeURIComponent(file.url_private)}`
+                                ? `/api/slack-proxy/image?url=${encodeURIComponent(file.url_private)}&token=${encodeURIComponent(slackToken)}`
                                 : file.url_private;
                               return (
                                 <a key={i} href={fullProxyUrl} target="_blank" rel="noopener noreferrer">

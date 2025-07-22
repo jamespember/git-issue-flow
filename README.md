@@ -50,12 +50,14 @@ To enable Slack thread previews with AI summaries:
 1. **Create a Slack App** in your workspace
 2. **Add bot token scopes**: `channels:history`, `channels:read`, `users:read`
 3. **Install the app** and invite the bot to relevant channels
-4. **Start the proxy server**:
+4. **Add your Slack bot token** in Settings > Integrations
+5. **Start the proxy server**:
    ```bash
    node slack-proxy.cjs
    ```
    This runs a local proxy on port 3001 for secure Slack API calls
-5. **Add your Slack bot token** in Settings > Integrations
+
+The proxy will automatically use the Slack token from your Settings configuration - no `.env` file needed!
 
 #### OpenAI Integration (Optional)
 For AI-powered issue formatting and Slack thread summaries:

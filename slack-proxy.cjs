@@ -14,14 +14,25 @@ app.use(cors({
 app.use(express.json());
 
 app.post('/api/slack-proxy', async (req, res) => {
-  const { endpoint, body } = req.body;
+  const { endpoint, body, token } = req.body;
   console.log('Proxy forwarding to Slack:', endpoint, body);
+  
+  // Accept token from request or fall back to environment variable
+  const slackToken = token || process.env.VITE_SLACK_BOT_TOKEN;
+  
+  if (!slackToken) {
+    return res.status(400).json({ 
+      ok: false, 
+      error: 'No Slack token provided. Pass token in request body or set VITE_SLACK_BOT_TOKEN environment variable.' 
+    });
+  }
+  
   try {
     const slackRes = await fetch(`https://slack.com/api/${endpoint}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Bearer ${process.env.VITE_SLACK_BOT_TOKEN}`,
+        'Authorization': `Bearer ${slackToken}`,
       },
       body: new URLSearchParams(body).toString(),
     });
@@ -35,9 +46,19 @@ app.post('/api/slack-proxy', async (req, res) => {
 // Image proxy endpoint for Slack files
 app.get('/api/slack-proxy/image', async (req, res) => {
   const fileUrl = req.query.url;
+  const token = req.query.token;
+  
   if (!fileUrl || typeof fileUrl !== 'string') {
     return res.status(400).send('Missing url parameter');
   }
+  
+  // Accept token from query parameter or fall back to environment variable
+  const slackToken = token || process.env.VITE_SLACK_BOT_TOKEN;
+  
+  if (!slackToken) {
+    return res.status(400).send('No Slack token provided. Pass token as query parameter or set VITE_SLACK_BOT_TOKEN environment variable.');
+  }
+  
   // Only allow Slack file URLs for security
   if (!fileUrl.startsWith('https://files.slack.com/')) {
     return res.status(403).send('Forbidden');
@@ -45,7 +66,7 @@ app.get('/api/slack-proxy/image', async (req, res) => {
   try {
     const slackRes = await fetch(fileUrl, {
       headers: {
-        'Authorization': `Bearer ${process.env.VITE_SLACK_BOT_TOKEN}`
+        'Authorization': `Bearer ${slackToken}`
       }
     });
     if (!slackRes.ok) {

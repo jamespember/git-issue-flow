@@ -43,6 +43,8 @@ interface SlackUrlInfo {
   message_ts?: string;
 }
 
+import { ConfigService } from './configService';
+
 export class SlackApiService {
   /**
    * Extract Slack URL information for archives links
@@ -105,12 +107,21 @@ export class SlackApiService {
     if (!urlInfo) return null;
 
     try {
+      // Get Slack token from user config
+      const config = ConfigService.load();
+      const slackToken = config.slack?.botToken;
+      
+      if (!slackToken) {
+        throw new Error('Slack bot token not configured. Please add it in Settings > Integrations.');
+      }
+
       // Fetch the parent message and all replies in the thread
       const response = await fetch('http://localhost:3001/api/slack-proxy', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           endpoint: 'conversations.replies',
+          token: slackToken,
           body: {
             channel: urlInfo.channel,
             ts: urlInfo.thread_ts
@@ -149,11 +160,20 @@ export class SlackApiService {
    */
   async getChannelInfo(channelId: string): Promise<{ name: string; topic?: string } | null> {
     try {
+      // Get Slack token from user config
+      const config = ConfigService.load();
+      const slackToken = config.slack?.botToken;
+      
+      if (!slackToken) {
+        throw new Error('Slack bot token not configured. Please add it in Settings > Integrations.');
+      }
+
       const response = await fetch('http://localhost:3001/api/slack-proxy', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           endpoint: 'conversations.info',
+          token: slackToken,
           body: { channel: channelId }
         })
       });
