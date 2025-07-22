@@ -69,8 +69,7 @@ class GitHubService {
     const url = `${GITHUB_API_URL}/search/issues?${queryParams}`;
     const response = await this.fetchWithAuth(url);
     
-    console.log('GitHub search response:', response);
-    console.log('Full search query used:', fullQuery);
+    // GitHub search completed successfully
     
     // GitHub search API returns results in a different format
     const issues: GitHubIssue[] = response.items || [];
@@ -92,7 +91,7 @@ class GitHubService {
     let page = 1;
     let hasMorePages = true;
     
-    console.log('Starting paginated fetch for all issues...');
+    // Starting paginated fetch for all issues
     
     while (hasMorePages) {
       const queryParams = new URLSearchParams({
@@ -106,7 +105,7 @@ class GitHubService {
       try {
         const response = await this.fetchWithAuth(url);
         
-        console.log(`Page ${page}: Found ${response.items?.length || 0} issues (Total: ${response.total_count})`);
+        // Fetched page with issues
         
         // GitHub search API returns results in a different format
         const pageIssues: GitHubIssue[] = response.items || [];
@@ -126,7 +125,7 @@ class GitHubService {
         
         // Safety check: don't fetch more than 1000 issues to avoid hitting rate limits
         if (allIssues.length >= 1000) {
-          console.log('Reached 1000 issue limit, stopping pagination');
+          // Reached issue limit, stopping pagination
           hasMorePages = false;
         }
         
@@ -136,7 +135,7 @@ class GitHubService {
       }
     }
     
-    console.log(`Pagination complete: Fetched ${allIssues.length} total issues`);
+    // Pagination completed
     return allIssues;
   }
 

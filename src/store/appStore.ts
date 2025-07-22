@@ -292,13 +292,7 @@ export const useAppStore = create<AppState>()(
           set({ currentIssueIndex: 0 });
         }
 
-        console.log('[refreshIssues] State after refresh:', {
-          issues: issues,
-          currentIssueIndex: get().currentIssueIndex,
-          removed: removedCount,
-          updated: updatedCount,
-          errors: errorCount
-        });
+        // Issues refresh completed
 
         return { removed: removedCount, updated: updatedCount, errors: errorCount };
       }

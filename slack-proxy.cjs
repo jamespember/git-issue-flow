@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.post('/api/slack-proxy', async (req, res) => {
   const { endpoint, body, token } = req.body;
-  console.log('Proxy forwarding to Slack:', endpoint, body);
+  console.log('Proxy forwarding to Slack endpoint:', endpoint);
   
   // Accept token from request or fall back to environment variable
   const slackToken = token || process.env.VITE_SLACK_BOT_TOKEN;
@@ -44,15 +44,14 @@ app.post('/api/slack-proxy', async (req, res) => {
 });
 
 // Image proxy endpoint for Slack files
-app.get('/api/slack-proxy/image', async (req, res) => {
-  const fileUrl = req.query.url;
-  const token = req.query.token;
+app.post('/api/slack-proxy/image', async (req, res) => {
+  const { url: fileUrl, token } = req.body;
   
   if (!fileUrl || typeof fileUrl !== 'string') {
     return res.status(400).send('Missing url parameter');
   }
   
-  // Accept token from query parameter or fall back to environment variable
+  // Accept token from request body or fall back to environment variable
   const slackToken = token || process.env.VITE_SLACK_BOT_TOKEN;
   
   if (!slackToken) {

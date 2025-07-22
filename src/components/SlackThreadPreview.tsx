@@ -338,18 +338,26 @@ const SlackThreadPreview: React.FC<SlackThreadPreviewProps> = ({
                         {message.files && message.files.length > 0 && (
                           <div className="mt-2 flex flex-wrap gap-2">
                             {message.files.filter(f => f.mimetype && f.mimetype.startsWith('image/')).map((file, i) => {
-                              const config = ConfigService.load();
-                              const slackToken = config.slack?.botToken || '';
                               const isSlackFile = file.url_private.startsWith('https://files.slack.com/');
-                              const proxyUrl = isSlackFile
-                                ? `/api/slack-proxy/image?url=${encodeURIComponent(file.thumb_360 || file.url_private)}&token=${encodeURIComponent(slackToken)}`
-                                : (file.thumb_360 || file.url_private);
-                              const fullProxyUrl = isSlackFile
-                                ? `/api/slack-proxy/image?url=${encodeURIComponent(file.url_private)}&token=${encodeURIComponent(slackToken)}`
-                                : file.url_private;
+                              
+                              if (isSlackFile) {
+                                // For Slack files, we need to proxy through our secure endpoint
+                                // This is a simplified approach - in production you'd want to implement blob URL creation
+                                return (
+                                  <div key={i} className="text-sm text-gray-600 p-2 border rounded">
+                                    📎 {file.title || file.name || 'Slack Image'} 
+                                    <br />
+                                    <span className="text-xs">Image preview requires direct Slack access</span>
+                                  </div>
+                                );
+                              }
+                              
+                              // For non-Slack files, display directly
+                              const proxyUrl = file.thumb_360 || file.url_private;
+                              const fullProxyUrl = file.url_private;
                               return (
                                 <a key={i} href={fullProxyUrl} target="_blank" rel="noopener noreferrer">
-                                  <img src={proxyUrl} alt={file.title || file.name || 'Slack file image'} className="max-h-40 rounded border shadow" />
+                                  <img src={proxyUrl} alt={file.title || file.name || 'Image'} className="max-h-40 rounded border shadow" />
                                 </a>
                               );
                             })}
