@@ -22,7 +22,7 @@ function App() {
 
 
 
-  // Command K keyboard shortcut
+  // Command K keyboard shortcut and external triggers
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -31,8 +31,16 @@ function App() {
       }
     };
 
+    const handleOpenCommandK = () => {
+      setIsCommandKOpen(true);
+    };
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('openCommandK', handleOpenCommandK);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('openCommandK', handleOpenCommandK);
+    };
   }, []);
 
   return (

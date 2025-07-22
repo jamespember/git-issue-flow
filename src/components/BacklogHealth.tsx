@@ -99,36 +99,83 @@ const BacklogHealth: React.FC = () => {
     const baseUrl = `https://github.com/${config.github.owner}/${config.github.repo}/issues`;
     
     switch (problemType) {
-      case 'ancient-issues':
+      case 'ancient-issues': {
         // Issues older than 6 months
         const sixMonthsAgo = new Date();
         sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
         const dateStr = sixMonthsAgo.toISOString().split('T')[0];
-        return `${baseUrl}?q=is%3Aopen+is%3Aissue+created%3A%3C${dateStr}`;
+        return `${baseUrl}?q=is:open is:issue created:<${dateStr}`.replace(/ /g, '+');
+      }
       
-      case 'priority-skew':
+      case 'priority-skew': {
         // High priority issues
-        return `${baseUrl}?q=is%3Aopen+is%3Aissue+label%3A"${encodeURIComponent(config.labels.priority.high)}"`;
+        return `${baseUrl}?q=is:open is:issue label:"${config.labels.priority.high}"`.replace(/ /g, '+');
+      }
       
-      case 'grooming-backlog':
+      case 'grooming-backlog': {
         // Issues without priority labels
         const priorityLabels = [
           config.labels.priority.high,
           config.labels.priority.medium,
           config.labels.priority.low
-        ].map(label => `-label%3A"${encodeURIComponent(label)}"`).join('+');
-        return `${baseUrl}?q=is%3Aopen+is%3Aissue+${priorityLabels}`;
+        ].map(label => `-label:"${label}"`).join(' ');
+        return `${baseUrl}?q=is:open is:issue ${priorityLabels}`.replace(/ /g, '+');
+      }
       
-      case 'creation-rate':
+      case 'creation-rate': {
         // Issues created in last 30 days
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
         const recentDateStr = thirtyDaysAgo.toISOString().split('T')[0];
-        return `${baseUrl}?q=is%3Aopen+is%3Aissue+created%3A%3E${recentDateStr}`;
+        return `${baseUrl}?q=is:open is:issue created:>${recentDateStr}`.replace(/ /g, '+');
+      }
       
       default:
-        return `${baseUrl}?q=is%3Aopen+is%3Aissue`;
+        return `${baseUrl}?q=is:open is:issue`.replace(/ /g, '+');
     }
+  };
+
+  const getSearchQuery = (problemType: string) => {
+    const config = ConfigService.load();
+    
+    switch (problemType) {
+      case 'ancient-issues': {
+        const sixMonthsAgo = new Date();
+        sixMonthsAgo.setMonth(sixMonthsAgo.getMonth() - 6);
+        const dateStr = sixMonthsAgo.toISOString().split('T')[0];
+        return `is:open is:issue created:<${dateStr}`;
+      }
+      
+      case 'priority-skew': {
+        return `is:open is:issue label:"${config.labels.priority.high}"`;
+      }
+      
+      case 'grooming-backlog': {
+        const priorityLabels = [
+          config.labels.priority.high,
+          config.labels.priority.medium,
+          config.labels.priority.low
+        ].map(label => `-label:"${label}"`).join(' ');
+        return `is:open is:issue ${priorityLabels}`;
+      }
+      
+      case 'creation-rate': {
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const recentDateStr = thirtyDaysAgo.toISOString().split('T')[0];
+        return `is:open is:issue created:>${recentDateStr}`;
+      }
+      
+      default:
+        return 'is:open is:issue';
+    }
+  };
+
+  const openInGitIssueFlow = (problemType: string) => {
+    const query = getSearchQuery(problemType);
+    // Trigger CommandK and set the search query
+    const searchEvent = new CustomEvent('openCommandK', { detail: { query } });
+    window.dispatchEvent(searchEvent);
   };
 
   return (
@@ -176,19 +223,32 @@ const BacklogHealth: React.FC = () => {
                   <span className="font-medium">
                     {problem.severity === 'critical' ? '🔴' : '⚠️'} {problem.message}
                   </span>
-                  <a
-                    href={getGitHubSearchUrl(problem.type)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`ml-3 flex items-center gap-1 text-xs px-2 py-1 rounded ${
-                      problem.severity === 'critical' 
-                        ? 'bg-red-200 text-red-900 hover:bg-red-300' 
-                        : 'bg-yellow-200 text-yellow-900 hover:bg-yellow-300'
-                    } transition-colors`}
-                  >
-                    <ExternalLink className="w-3 h-3" />
-                    View in GitHub
-                  </a>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => openInGitIssueFlow(problem.type)}
+                      className={`flex items-center gap-1 text-xs px-2 py-1 rounded transition-colors ${
+                        problem.severity === 'critical' 
+                          ? 'bg-red-200 text-red-900 hover:bg-red-300' 
+                          : 'bg-yellow-200 text-yellow-900 hover:bg-yellow-300'
+                      }`}
+                    >
+                      <Search className="w-3 h-3" />
+                      Search Here
+                    </button>
+                    <a
+                      href={getGitHubSearchUrl(problem.type)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`flex items-center gap-1 text-xs px-2 py-1 rounded transition-colors ${
+                        problem.severity === 'critical' 
+                          ? 'bg-red-200 text-red-900 hover:bg-red-300' 
+                          : 'bg-yellow-200 text-yellow-900 hover:bg-yellow-300'
+                      }`}
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      View in GitHub
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
@@ -295,18 +355,27 @@ const BacklogHealth: React.FC = () => {
                 <div>
                   <div className="font-medium text-gray-900">Prioritize Ungroomed Issues</div>
                   <div className="text-sm text-gray-600">
-                    {metrics.priorityBalance.ungroomed} issues need prioritization. Press ⌘K and search "is:open -label:priority" to find them.
+                    {metrics.priorityBalance.ungroomed} issues lack priority labels (high/medium/low). These need grooming to assign appropriate priority.
                   </div>
                 </div>
-                <a
-                  href={getGitHubSearchUrl('grooming-backlog')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-3 flex items-center gap-1 text-xs px-2 py-1 bg-blue-100 text-blue-900 rounded hover:bg-blue-200 transition-colors flex-shrink-0"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  View in GitHub
-                </a>
+                <div className="flex items-center gap-2 ml-3 flex-shrink-0">
+                  <button
+                    onClick={() => openInGitIssueFlow('grooming-backlog')}
+                    className="flex items-center gap-1 text-xs px-2 py-1 bg-blue-100 text-blue-900 rounded hover:bg-blue-200 transition-colors"
+                  >
+                    <Search className="w-3 h-3" />
+                    Search Here
+                  </button>
+                  <a
+                    href={getGitHubSearchUrl('grooming-backlog')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 text-xs px-2 py-1 bg-blue-100 text-blue-900 rounded hover:bg-blue-200 transition-colors"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    View in GitHub
+                  </a>
+                </div>
               </div>
             </div>
           )}
@@ -327,15 +396,24 @@ const BacklogHealth: React.FC = () => {
                     {metrics.ageDistribution.stale + metrics.ageDistribution.ancient} issues are 3+ months old. Consider closing outdated ones.
                   </div>
                 </div>
-                <a
-                  href={getGitHubSearchUrl('ancient-issues')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="ml-3 flex items-center gap-1 text-xs px-2 py-1 bg-red-100 text-red-900 rounded hover:bg-red-200 transition-colors flex-shrink-0"
-                >
-                  <ExternalLink className="w-3 h-3" />
-                  View in GitHub
-                </a>
+                <div className="flex items-center gap-2 ml-3 flex-shrink-0">
+                  <button
+                    onClick={() => openInGitIssueFlow('ancient-issues')}
+                    className="flex items-center gap-1 text-xs px-2 py-1 bg-red-100 text-red-900 rounded hover:bg-red-200 transition-colors"
+                  >
+                    <Search className="w-3 h-3" />
+                    Search Here
+                  </button>
+                  <a
+                    href={getGitHubSearchUrl('ancient-issues')}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1 text-xs px-2 py-1 bg-red-100 text-red-900 rounded hover:bg-red-200 transition-colors"
+                  >
+                    <ExternalLink className="w-3 h-3" />
+                    View in GitHub
+                  </a>
+                </div>
               </div>
             </div>
           )}

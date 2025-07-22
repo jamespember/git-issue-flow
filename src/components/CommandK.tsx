@@ -15,6 +15,19 @@ const CommandK: React.FC<CommandKProps> = ({ isOpen, onClose }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { searchAndLoadIssues, fetchStatus } = useAppStore();
 
+  // Listen for external search requests from BacklogHealth
+  useEffect(() => {
+    const handleOpenCommandK = (event: CustomEvent) => {
+      if (event.detail?.query) {
+        setQuery(event.detail.query);
+        // Don't auto-search, let user see the query and decide
+      }
+    };
+
+    window.addEventListener('openCommandK', handleOpenCommandK as EventListener);
+    return () => window.removeEventListener('openCommandK', handleOpenCommandK as EventListener);
+  }, []);
+
   // Sample queries for quick use
   const sampleQueries = [
     {
