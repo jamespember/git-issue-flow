@@ -1,55 +1,65 @@
+// slack-proxy.js
 const express = require('express');
 const cors = require('cors');
-const { WebClient } = require('@slack/web-api');
+require('dotenv').config();
 
 const app = express();
-const port = 3001;
+const PORT = 3001;
 
-// Enable CORS for your frontend
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:3000'],
-  credentials: true
+  origin: 'http://localhost:5173',
+  methods: ['POST', 'OPTIONS'],
 }));
 
 app.use(express.json());
 
-// Slack API proxy endpoint
 app.post('/api/slack-proxy', async (req, res) => {
+  const { endpoint, body } = req.body;
+  console.log('Proxy forwarding to Slack:', endpoint, body);
   try {
-    const { token, method, params } = req.body;
-    
-    if (!token) {
-      return res.status(400).json({ error: 'Slack token is required' });
-    }
-
-    const slack = new WebClient(token);
-    
-    let result;
-    switch (method) {
-      case 'conversations.replies':
-        result = await slack.conversations.replies(params);
-        break;
-      case 'conversations.info':
-        result = await slack.conversations.info(params);
-        break;
-      case 'users.info':
-        result = await slack.users.info(params);
-        break;
-      default:
-        return res.status(400).json({ error: 'Unsupported method' });
-    }
-
-    res.json(result);
-  } catch (error) {
-    console.error('Slack API error:', error);
-    res.status(500).json({ 
-      error: error.message || 'Failed to call Slack API',
-      details: error.data || null
+    const slackRes = await fetch(`https://slack.com/api/${endpoint}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': `Bearer ${process.env.VITE_SLACK_BOT_TOKEN}`,
+      },
+      body: new URLSearchParams(body).toString(),
     });
+    const data = await slackRes.json();
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ ok: false, error: err.message });
   }
 });
 
-app.listen(port, () => {
-  console.log(`Slack proxy server running on http://localhost:${port}`);
-  console.log('This proxy enables CORS for Slack API calls from your frontend');
+// Image proxy endpoint for Slack files
+app.get('/api/slack-proxy/image', async (req, res) => {
+  const fileUrl = req.query.url;
+  if (!fileUrl || typeof fileUrl !== 'string') {
+    return res.status(400).send('Missing url parameter');
+  }
+  // Only allow Slack file URLs for security
+  if (!fileUrl.startsWith('https://files.slack.com/')) {
+    return res.status(403).send('Forbidden');
+  }
+  try {
+    const slackRes = await fetch(fileUrl, {
+      headers: {
+        'Authorization': `Bearer ${process.env.VITE_SLACK_BOT_TOKEN}`
+      }
+    });
+    if (!slackRes.ok) {
+      return res.status(slackRes.status).send('Failed to fetch image from Slack');
+    }
+    // Set content type
+    res.set('Content-Type', slackRes.headers.get('content-type') || 'application/octet-stream');
+    // Stream the image
+    slackRes.body.pipe(res);
+  } catch (err) {
+    res.status(500).send('Proxy error: ' + err.message);
+  }
+});
+
+app.listen(PORT, () => {
+  console.log(`Slack proxy server running on http://localhost:${PORT}`);
 });
