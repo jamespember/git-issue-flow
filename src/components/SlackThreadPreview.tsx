@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageSquare, Users, ExternalLink, X, Sparkles } from 'lucide-react';
 import { slackApiService, SlackThread, SlackMessage } from '../services/slackApi';
+import { ConfigService } from '../services/configService';
 
 const MARGIN = 12; // px
 
@@ -95,8 +96,9 @@ const SlackThreadPreview: React.FC<SlackThreadPreviewProps> = ({
   };
 
   const getAiSummary = async (messages: SlackMessage[]): Promise<string> => {
-    const apiKey = import.meta.env.VITE_OPENAI_API_KEY;
-    if (!apiKey) return 'No OpenAI API key configured.';
+    const config = ConfigService.load();
+    const apiKey = config.openai?.apiKey;
+    if (!apiKey) return 'No OpenAI API key configured in Settings.';
     const prompt = `You are an expert at summarizing Slack bug threads for a backlog groomer. Given the following Slack thread, provide a concise, actionable summary (1-2 sentences) for a groomer. Focus on the main takeaway, whether it is a bug or not, and any clear suggestions (e.g., not a bug, still a bug, hard, easy, etc).\n\nThread:\n${messages.map(m => `- ${m.username || m.user || 'User'}: ${m.text}`).join('\n')}`;
     try {
       const res = await fetch('https://api.openai.com/v1/chat/completions', {

@@ -7,12 +7,14 @@ export interface FormatIssueOptions {
   template?: 'standard' | 'custom';
 }
 
+import { ConfigService } from './configService';
+
 export class AIService {
-  private apiKey: string;
   private endpoint = 'https://api.openai.com/v1/chat/completions';
 
-  constructor() {
-    this.apiKey = import.meta.env.VITE_OPENAI_API_KEY || '';
+  private get apiKey(): string {
+    const config = ConfigService.load();
+    return config.openai?.apiKey || '';
   }
 
   /**

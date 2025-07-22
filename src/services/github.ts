@@ -10,7 +10,7 @@ class GitHubService {
 
   private get token() {
     const config = this.getConfig();
-    return config.github.token || import.meta.env.VITE_GITHUB_TOKEN || '';
+    return config.github.token || '';
   }
 
   private async fetchWithAuth(url: string, options: RequestInit = {}) {
