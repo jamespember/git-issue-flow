@@ -41,14 +41,24 @@ npm run dev
 ## Setup
 
 ### Required: GitHub Token
-1. Create token at [GitHub Settings](https://github.com/settings/tokens) with `repo` scope
-2. Add to Settings in the app
+1. Go to [GitHub Settings > Personal Access Tokens](https://github.com/settings/tokens)
+2. Click "Generate new token" → "Generate new token (classic)"
+3. **Required scopes:**
+   - `repo` (Full control of private repositories) - **Required for all repositories**
+   - `read:org` (Read org membership) - **Only if using organization repositories**
+4. Copy the token (starts with `ghp_`)
+5. Add to Settings in the app
 
 ### Optional: Slack Integration
-1. Create Slack app with bot token
-2. Add scopes: `channels:history`, `channels:read`, `users:read`  
-3. Run proxy: `node slack-proxy.cjs`
-4. Add bot token in Settings
+1. Go to [Slack API Apps](https://api.slack.com/apps) → "Create New App"
+2. **Required Bot Token Scopes:**
+   - `channels:history` (View messages in public channels)
+   - `channels:read` (View basic info about public channels)  
+   - `users:read` (View people in workspace)
+3. Install app to workspace and invite bot to relevant channels
+4. Copy Bot User OAuth Token (starts with `xoxb-`)
+5. Run proxy: `node slack-proxy.cjs`
+6. Add bot token in Settings
 
 ### Optional: OpenAI
 Add API key in Settings for AI-powered features
