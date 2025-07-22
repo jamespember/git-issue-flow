@@ -50,16 +50,20 @@ class GitHubService {
   }): Promise<GitHubIssue[]> {
     const config = this.getConfig();
     
-    // Construct the full search query with repo scope and priority exclusions
+    // Construct the full search query with repo scope and various exclusions
     const priorityExclusions = config.workflow.excludePrioritized 
       ? `-label:${config.labels.priority.high} -label:${config.labels.priority.medium} -label:${config.labels.priority.low}`
       : '';
     
+    const groomedExclusions = config.workflow.excludeGroomed 
+      ? config.labels.groomed.map(label => `-label:"${label}"`).join(' ')
+      : '';
+    
     const dependencyExclusions = config.workflow.excludeDependencies 
-      ? config.labels.exclude.map(label => `-label:${label}`).join(' ')
+      ? config.labels.exclude.map(label => `-label:"${label}"`).join(' ')
       : '';
       
-    const fullQuery = `repo:${owner}/${repo} ${query} ${priorityExclusions} ${dependencyExclusions}`.trim();
+    const fullQuery = `repo:${owner}/${repo} ${query} ${priorityExclusions} ${groomedExclusions} ${dependencyExclusions}`.trim();
     
     const queryParams = new URLSearchParams({
       q: fullQuery,

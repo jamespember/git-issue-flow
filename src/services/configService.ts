@@ -5,7 +5,7 @@ import { UserConfig, DEFAULT_CONFIG } from '../config/userConfig';
  * Provides save, load, reset, and validation functionality
  */
 export class ConfigService {
-  private static readonly CONFIG_KEY = 'gitissueflow-config';
+  private static readonly CONFIG_KEY = 'git-issue-flow-config';
   private static readonly CONFIG_VERSION = '1.0';
   
   /**
@@ -41,11 +41,13 @@ export class ConfigService {
       // Handle legacy configs (without version)
       if (!parsed.version) {
         console.log('Migrating legacy configuration');
-        return { ...DEFAULT_CONFIG, ...parsed };
+        const migrated = this.migrateConfig({ ...DEFAULT_CONFIG, ...parsed });
+        return migrated;
       }
       
       // Merge with defaults to ensure all properties exist
-      return { ...DEFAULT_CONFIG, ...parsed.data };
+      const merged = { ...DEFAULT_CONFIG, ...parsed.data };
+      return this.migrateConfig(merged);
     } catch (error) {
       console.error('Failed to load configuration, using defaults:', error);
       return { ...DEFAULT_CONFIG };
@@ -106,6 +108,33 @@ export class ConfigService {
     };
   }
   
+  /**
+   * Migrate configuration from older formats
+   */
+  private static migrateConfig(config: UserConfig): UserConfig {
+    // Migrate single groomed label to array format
+    if (config.labels?.groomed && typeof config.labels.groomed === 'string') {
+      console.log('Migrating groomed label from string to array format');
+      config.labels.groomed = [config.labels.groomed as string] as string[];
+    }
+    
+    // Ensure groomed is always an array
+    if (!Array.isArray(config.labels?.groomed)) {
+      config.labels = {
+        ...config.labels,
+        groomed: DEFAULT_CONFIG.labels.groomed
+      };
+    }
+    
+    // Ensure new workflow properties exist
+    if (config.workflow && typeof config.workflow.excludeGroomed === 'undefined') {
+      console.log('Adding missing workflow.excludeGroomed property');
+      config.workflow.excludeGroomed = DEFAULT_CONFIG.workflow.excludeGroomed;
+    }
+    
+    return config;
+  }
+
   /**
    * Check if configuration is set up (has minimum required fields)
    */

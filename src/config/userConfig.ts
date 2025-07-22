@@ -15,7 +15,7 @@ export interface UserConfig {
       medium: string;
       low: string;
     };
-    groomed: string;
+    groomed: string[]; // Array of labels that indicate an issue has been groomed (OR logic)
     exclude: string[];
   };
   slack?: {
@@ -28,6 +28,7 @@ export interface UserConfig {
   workflow: {
     excludePrioritized: boolean;
     excludeDependencies: boolean;
+    excludeGroomed: boolean; // Exclude issues with any groomed labels
     defaultBatchSize: number;
   };
   ui: {
@@ -48,12 +49,13 @@ export const DEFAULT_CONFIG: UserConfig = {
       medium: 'prio-medium', 
       low: 'prio-low'
     },
-    groomed: 'groomed',
+    groomed: ['prio-high', 'prio-medium', 'prio-low'], // Default: any priority label means groomed
     exclude: ['dependencies']
   },
   workflow: {
-    excludePrioritized: true,
+    excludePrioritized: false, // Turn off since we're using groomed labels instead
     excludeDependencies: true,
+    excludeGroomed: true, // By default, exclude groomed issues from search
     defaultBatchSize: 30
   },
   ui: {
@@ -67,7 +69,7 @@ export const EXAMPLE_CONFIGS = {
     github: { owner: 'yourusername', repo: 'your-project', token: 'ghp_...' },
     labels: {
       priority: { high: 'urgent', medium: 'important', low: 'nice-to-have' },
-      groomed: 'reviewed',
+      groomed: ['reviewed'],
       exclude: ['wontfix', 'duplicate']
     }
   },
@@ -75,7 +77,7 @@ export const EXAMPLE_CONFIGS = {
     github: { owner: 'company', repo: 'product', token: 'ghp_...' },
     labels: {
       priority: { high: 'P0', medium: 'P1', low: 'P2' },
-      groomed: 'triaged',
+      groomed: ['triaged'],
       exclude: ['external-dependency', 'blocked']
     }
   },
@@ -83,7 +85,7 @@ export const EXAMPLE_CONFIGS = {
     github: { owner: 'facebook', repo: 'react', token: 'ghp_...' },
     labels: {
       priority: { high: 'high priority', medium: 'medium priority', low: 'low priority' },
-      groomed: 'confirmed',
+      groomed: ['confirmed'],
       exclude: ['good first issue', 'help wanted']
     }
   }

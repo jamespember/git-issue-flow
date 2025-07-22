@@ -35,7 +35,7 @@ const BacklogHealth: React.FC = () => {
       
       console.log('Loaded issues for health analysis:', allIssues.length);
       
-      const analysisResult = analyzer.analyzeBacklog(allIssues);
+      const analysisResult = analyzer.analyzeBacklog(allIssues, config.labels.groomed);
       setMetrics(analysisResult);
     } catch (err) {
       console.error('Error loading health data:', err);

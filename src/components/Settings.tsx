@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { UserConfig, EXAMPLE_CONFIGS } from '../config/userConfig';
 import { ConfigService } from '../services/configService';
 import { githubService } from '../services/github';
@@ -33,22 +33,7 @@ const Settings: React.FC = () => {
   const [openaiTestState, setOpenAITestState] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
   const [openaiTestResult, setOpenAITestResult] = useState<string>('');
   
-  useEffect(() => {
-    const original = ConfigService.load();
-    setIsDirty(JSON.stringify(config) !== JSON.stringify(original));
-  }, [config]);
-
-  useEffect(() => {
-    // Fetch labels when GitHub config changes and is valid
-    if (config.github.owner && config.github.repo && config.github.token) {
-      fetchGitHubLabels();
-    } else {
-      setAvailableLabels([]);
-      setLabelsError(null);
-    }
-  }, [config.github.owner, config.github.repo, config.github.token]);
-
-  const fetchGitHubLabels = async () => {
+  const fetchGitHubLabels = useCallback(async () => {
     if (!config.github.owner || !config.github.repo || !config.github.token) {
       return;
     }
@@ -65,7 +50,22 @@ const Settings: React.FC = () => {
     } finally {
       setLabelsLoading(false);
     }
-  };
+  }, [config.github.owner, config.github.repo, config.github.token]);
+
+  useEffect(() => {
+    const original = ConfigService.load();
+    setIsDirty(JSON.stringify(config) !== JSON.stringify(original));
+  }, [config]);
+
+  useEffect(() => {
+    // Fetch labels when GitHub config changes and is valid
+    if (config.github.owner && config.github.repo && config.github.token) {
+      fetchGitHubLabels();
+    } else {
+      setAvailableLabels([]);
+      setLabelsError(null);
+    }
+  }, [config.github.owner, config.github.repo, config.github.token, fetchGitHubLabels]);
 
   const handleSave = () => {
     // Allow saving GitHub credentials without requiring priority labels
@@ -106,7 +106,7 @@ const Settings: React.FC = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'gitissueflow-config.json';
+    a.download = 'git-issue-flow-config.json';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -184,7 +184,7 @@ const Settings: React.FC = () => {
             <div className="p-2">
               <input
                 type="text"
-                placeholder="Search labels or type custom..."
+                placeholder="Search GitHub labels..."
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 className="w-full px-2 py-1 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
@@ -211,9 +211,23 @@ const Settings: React.FC = () => {
                   </button>
                 ))
               }
-              {availableLabels.filter(label => label.name.toLowerCase().includes(value.toLowerCase())).length === 0 && value && (
-                <div className="px-3 py-2 text-sm text-gray-500">
-                  No matching labels. Current value will be used as custom label.
+              {availableLabels.filter(label => label.name.toLowerCase().includes(value.toLowerCase())).length === 0 && (
+                <div className="px-3 py-2 text-sm text-center text-gray-500">
+                  {value ? (
+                    <>
+                      <div className="mb-1">No labels found matching "{value}"</div>
+                      <div className="text-xs text-gray-400">Only existing GitHub labels can be selected</div>
+                    </>
+                  ) : (
+                    availableLabels.length === 0 ? (
+                      <>
+                        <div className="mb-1">No GitHub labels available</div>
+                        <div className="text-xs text-gray-400">Make sure your GitHub token has access to the repository</div>
+                      </>
+                    ) : (
+                      'Type to search labels'
+                    )
+                  )}
                 </div>
               )}
             </div>
@@ -247,6 +261,7 @@ const Settings: React.FC = () => {
     const addLabel = (labelName: string) => {
       if (!values.includes(labelName)) {
         onChange([...values, labelName]);
+        setSearchTerm('');
       }
     };
     
@@ -254,23 +269,21 @@ const Settings: React.FC = () => {
       onChange(values.filter(v => v !== labelName));
     };
     
-    const addCustomLabel = () => {
-      if (searchTerm.trim() && !values.includes(searchTerm.trim())) {
-        onChange([...values, searchTerm.trim()]);
-        setSearchTerm('');
-      }
-    };
-    
     return (
       <div className="relative">
-        <div className="w-full min-h-[42px] px-3 py-2 border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent">
+        <div className="w-full min-h-[42px] px-3 py-2 border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-blue-500 focus-within:border-transparent bg-white">
           <div className="flex flex-wrap gap-1 mb-1">
             {values.map(labelName => {
               const label = availableLabels.find(l => l.name === labelName);
               return (
                 <span 
                   key={labelName}
-                  className="inline-flex items-center gap-1 px-2 py-1 bg-gray-100 text-sm rounded-md"
+                  className="inline-flex items-center gap-1 px-2 py-1 text-sm rounded-md"
+                  style={{ 
+                    backgroundColor: label ? `#${label.color}20` : '#f3f4f6',
+                    color: label ? `#${label.color}` : '#374151',
+                    border: `1px solid ${label ? `#${label.color}40` : '#d1d5db'}`
+                  }}
                 >
                   {label && (
                     <span 
@@ -278,11 +291,11 @@ const Settings: React.FC = () => {
                       style={{ backgroundColor: `#${label.color}` }}
                     />
                   )}
-                  <span>{labelName}</span>
+                  <span className="font-medium">{labelName}</span>
                   <button
                     type="button"
                     onClick={() => removeLabel(labelName)}
-                    className="text-gray-400 hover:text-gray-600 ml-1"
+                    className="ml-1 hover:opacity-70 transition-opacity"
                     disabled={disabled}
                   >
                     <X className="w-3 h-3" />
@@ -298,81 +311,72 @@ const Settings: React.FC = () => {
             className="w-full text-left text-gray-500 text-sm disabled:cursor-not-allowed flex items-center justify-between"
           >
             <span>{values.length === 0 ? placeholder : `${values.length} selected`}</span>
-            <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+            <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
           </button>
         </div>
         
         {isOpen && !disabled && (
           <div 
-            className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto"
+            className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-2 border-b border-gray-200">
-              <div className="flex gap-1">
-                <input
-                  type="text"
-                  placeholder="Search labels or add custom..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  onClick={(e) => e.stopPropagation()}
-                  className="flex-1 px-2 py-1 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Escape') {
-                      if (searchTerm.trim()) {
-                        // Clear search first if there's text
-                        setSearchTerm('');
-                      } else {
-                        // Close dropdown only if search is empty
-                        setIsOpen(false);
-                      }
-                      return;
+            <div className="p-3 border-b border-gray-200 bg-gray-50">
+              <input
+                type="text"
+                placeholder="Search GitHub labels..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                onClick={(e) => e.stopPropagation()}
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') {
+                    if (searchTerm.trim()) {
+                      setSearchTerm('');
+                    } else {
+                      setIsOpen(false);
                     }
-                    if (e.key === 'Enter') {
-                      e.preventDefault();
-                      addCustomLabel();
-                    }
-                  }}
-                />
-                {searchTerm.trim() && !availableLabels.some(l => l.name === searchTerm.trim()) && (
-                  <button
-                    type="button"
-                    onClick={addCustomLabel}
-                    className="px-2 py-1 text-sm bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
-                    Add
-                  </button>
-                )}
-              </div>
-            </div>
-            <div>
-              {filteredLabels.map(label => (
-                <button
-                  key={label.id}
-                  onClick={() => {
-                    addLabel(label.name);
-                    setSearchTerm('');
-                  }}
-                  className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
-                >
-                  <span 
-                    className="w-3 h-3 rounded-full flex-shrink-0" 
-                    style={{ backgroundColor: `#${label.color}` }}
-                  />
-                  <span>{label.name}</span>
-                </button>
-              ))
-              }
-              {filteredLabels.length === 0 && searchTerm && (
-                <div className="px-3 py-2 text-sm text-gray-500">
-                  {availableLabels.some(l => l.name.toLowerCase() === searchTerm.toLowerCase()) 
-                    ? 'Label already selected' 
-                    : 'Press Enter or click Add to create custom label'
+                    return;
                   }
-                </div>
-              )}
-              {filteredLabels.length === 0 && !searchTerm && (
-                <div className="px-3 py-2 text-sm text-gray-500">
-                  All available labels selected
+                  if (e.key === 'Enter' && filteredLabels.length > 0) {
+                    e.preventDefault();
+                    addLabel(filteredLabels[0].name);
+                  }
+                }}
+                autoFocus
+              />
+            </div>
+            <div className="max-h-48 overflow-y-auto">
+              {filteredLabels.length > 0 ? (
+                filteredLabels.map(label => (
+                  <button
+                    key={label.id}
+                    onClick={() => addLabel(label.name)}
+                    className="w-full px-3 py-2 text-left hover:bg-blue-50 flex items-center gap-3 transition-colors duration-150 border-b border-gray-100 last:border-b-0"
+                  >
+                    <span 
+                      className="w-3 h-3 rounded-full flex-shrink-0" 
+                      style={{ backgroundColor: `#${label.color}` }}
+                    />
+                    <span className="font-medium text-gray-900">{label.name}</span>
+                  </button>
+                ))
+              ) : (
+                <div className="px-3 py-4 text-sm text-center text-gray-500">
+                  {searchTerm ? (
+                    <>
+                      <div className="mb-2">No labels found matching "{searchTerm}"</div>
+                      <div className="text-xs text-gray-400">Only existing GitHub labels can be selected</div>
+                    </>
+                  ) : (
+                    availableLabels.length === 0 ? (
+                      <>
+                        <div className="mb-2">No GitHub labels available</div>
+                        <div className="text-xs text-gray-400">Make sure your GitHub token has access to the repository</div>
+                      </>
+                    ) : (
+                      'All available labels selected'
+                    )
+                  )}
                 </div>
               )}
             </div>
@@ -788,16 +792,17 @@ const Settings: React.FC = () => {
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Groomed Label</label>
-            <div className="w-full md:w-1/3">
-              <LabelDropdown
-                value={config.labels.groomed}
-                onChange={(value) => setConfig({...config, labels: {...config.labels, groomed: value}})}
-                placeholder="Select groomed label"
-                disabled={labelsLoading}
-              />
-            </div>
-            <p className="text-sm text-gray-600 mt-1">Label to mark issues as reviewed/groomed</p>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Groomed Labels</label>
+            <MultiLabelSelect
+              values={config.labels.groomed}
+              onChange={(values) => setConfig({...config, labels: {...config.labels, groomed: values}})}
+              placeholder="Select labels that indicate an issue has been groomed"
+              disabled={labelsLoading}
+            />
+            <p className="text-sm text-gray-600 mt-1">
+              Issues with <strong>any</strong> of these labels will be considered groomed/reviewed (OR logic).
+              Default uses priority labels, but you can add specific groomed labels like "reviewed" or "triaged".
+            </p>
           </div>
           
           <div>
@@ -1086,7 +1091,7 @@ const Settings: React.FC = () => {
           <div className="flex items-center justify-between">
             <div>
               <h3 className="font-medium">Exclude Prioritized Issues</h3>
-              <p className="text-sm text-gray-600">Don't show issues that already have priority labels in search results</p>
+              <p className="text-sm text-gray-600">Don't show issues that already have priority labels (high/medium/low) in search results</p>
             </div>
             <label className="relative inline-flex items-center cursor-pointer">
               <input
@@ -1095,6 +1100,25 @@ const Settings: React.FC = () => {
                 onChange={(e) => setConfig({
                   ...config, 
                   workflow: {...config.workflow, excludePrioritized: e.target.checked}
+                })}
+                className="sr-only peer"
+              />
+              <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+          </div>
+          
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="font-medium">Exclude Groomed Issues</h3>
+              <p className="text-sm text-gray-600">Don't show issues that have any groomed labels in search results (OR logic)</p>
+            </div>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input
+                type="checkbox"
+                checked={config.workflow.excludeGroomed}
+                onChange={(e) => setConfig({
+                  ...config, 
+                  workflow: {...config.workflow, excludeGroomed: e.target.checked}
                 })}
                 className="sr-only peer"
               />

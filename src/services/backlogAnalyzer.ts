@@ -51,10 +51,10 @@ export interface Problem {
 
 export class BacklogAnalyzer {
   
-  analyzeBacklog(issues: GitHubIssue[]): BacklogMetrics {
+  analyzeBacklog(issues: GitHubIssue[], groomedLabels?: string[]): BacklogMetrics {
     const ageDistribution = this.analyzeAgeDistribution(issues);
     const priorityBalance = this.analyzePriorityBalance(issues);
-    const velocity = this.analyzeVelocity(issues);
+    const velocity = this.analyzeVelocity(issues, groomedLabels);
     const healthScore = this.calculateHealthScore(ageDistribution, priorityBalance, velocity);
     const problems = this.detectProblems(ageDistribution, priorityBalance, velocity);
 
@@ -123,7 +123,7 @@ export class BacklogAnalyzer {
     return balance;
   }
 
-  private analyzeVelocity(issues: GitHubIssue[]): VelocityMetrics {
+  private analyzeVelocity(issues: GitHubIssue[], groomedLabels: string[] = ['prio-high', 'prio-medium', 'prio-low']): VelocityMetrics {
     const now = new Date();
     const thirtyDaysAgo = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000));
 
@@ -134,7 +134,7 @@ export class BacklogAnalyzer {
 
     const groomedIssues = issues.filter(issue => {
       const labels = issue.labels.map(l => l.name);
-      return labels.some(label => ['prio-high', 'prio-medium', 'prio-low'].includes(label));
+      return labels.some(label => groomedLabels.includes(label));
     });
 
     // Calculate average time from creation to grooming (approximation)

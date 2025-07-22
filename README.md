@@ -1,4 +1,4 @@
-# GitIssueFlow
+# Git Issue Flow
 
 Fast, keyboard-driven GitHub issue management tool for efficient backlog grooming. No database, no servers - just your browser and GitHub API.
 
@@ -7,8 +7,8 @@ Made by [James Pember](https://jamespember.com)
 ## Quick Start
 
 ```bash
-git clone https://github.com/jamespember/github-groomer.git
-cd github-groomer
+git clone https://github.com/jamespember/git-issue-flow.git
+cd git-issue-flow
 npm install
 npm run dev
 ```
