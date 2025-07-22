@@ -15,8 +15,8 @@ Made by [James Pember](https://jamespember.com)
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/jamespember/gitissueflow.git
-   cd gitissueflow
+   git clone https://github.com/jamespember/github-groomer.git
+   cd github-groomer
    ```
 
 2. **Install dependencies**
