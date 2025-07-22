@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { githubService } from '../services/github';
 import { GitHubIssue } from '../types/github';
+import { ConfigService } from '../services/configService';
 
 type FetchStatus = 'idle' | 'loading' | 'success' | 'error';
 
@@ -36,14 +37,28 @@ export const useAppStore = create<AppState>()(
       sortBy: 'created',
       sortDirection: 'asc',
       
-      searchAndLoadIssues: async (query: string, batchSize = 30) => {
+      searchAndLoadIssues: async (query: string, batchSize?: number) => {
         console.log('[searchAndLoadIssues] called with query:', query);
+        const config = ConfigService.load();
+        
+        // Check if configuration is set up
+        if (!ConfigService.isConfigured()) {
+          console.error('GitHub configuration not set up');
+          set({ fetchStatus: 'error' });
+          return;
+        }
+        
         set({ fetchStatus: 'loading' });
         
         try {
-          const owner = 'komo-tech';
-          const repo = 'komo-platform';
-          const response = await githubService.searchIssues({ owner, repo, query, per_page: batchSize });
+          const { owner, repo } = config.github;
+          const effectiveBatchSize = batchSize || config.workflow.defaultBatchSize;
+          const response = await githubService.searchIssues({ 
+            owner, 
+            repo, 
+            query, 
+            per_page: effectiveBatchSize 
+          });
           console.log('Loaded issues from search:', response);
           set({
             issues: response,
@@ -69,12 +84,13 @@ export const useAppStore = create<AppState>()(
       },
       
       setPriority: (issueNumber, priority) => {
-        // Only allow one priority label: prio-high, prio-medium, prio-low
-        const PRIORITY_LABELS = ['prio-high', 'prio-medium', 'prio-low'];
+        const config = ConfigService.load();
+        // Only allow one priority label based on user configuration
+        const PRIORITY_LABELS = [config.labels.priority.high, config.labels.priority.medium, config.labels.priority.low];
         const PRIORITY_LABEL_MAP = {
-          high: 'prio-high',
-          medium: 'prio-medium',
-          low: 'prio-low',
+          high: config.labels.priority.high,
+          medium: config.labels.priority.medium,
+          low: config.labels.priority.low,
         };
         const { issues } = get();
         const updated = issues.map(issue => {
@@ -145,9 +161,10 @@ export const useAppStore = create<AppState>()(
         const labels = issue.labels.map(l => l.name);
         // PATCH to GitHub
         try {
+          const config = ConfigService.load();
           await githubService.updateIssue({
-            owner: 'komo-tech',
-            repo: 'komo-platform',
+            owner: config.github.owner,
+            repo: config.github.repo,
             issueNumber: issue.number,
             title: issue.title,
             body: issue.body,
@@ -179,9 +196,10 @@ export const useAppStore = create<AppState>()(
         
         // Close the issue as "not planned" on GitHub
         try {
+          const config = ConfigService.load();
           await githubService.closeIssueAsNotPlanned({
-            owner: 'komo-tech',
-            repo: 'komo-platform',
+            owner: config.github.owner,
+            repo: config.github.repo,
             issueNumber: issue.number,
           });
         } catch (err) {
@@ -213,8 +231,14 @@ export const useAppStore = create<AppState>()(
       refreshIssues: async () => {
         console.log('[refreshIssues] called');
         const { issues } = get();
-        const owner = 'komo-tech';
-        const repo = 'komo-platform';
+        const config = ConfigService.load();
+        
+        if (!ConfigService.isConfigured()) {
+          console.error('GitHub configuration not set up');
+          return { removed: 0, updated: 0, errors: 1 };
+        }
+        
+        const { owner, repo } = config.github;
         const currentIssue = issues[get().currentIssueIndex];
 
         let removedCount = 0;

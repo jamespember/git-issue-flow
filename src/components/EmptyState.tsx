@@ -1,7 +1,40 @@
 import React from 'react';
-import { Command, Search } from 'lucide-react';
+import { Command, Search, Settings } from 'lucide-react';
+import { ConfigService } from '../services/configService';
 
-const EmptyState: React.FC = () => {
+interface EmptyStateProps {
+  onGoToSettings?: () => void;
+}
+
+const EmptyState: React.FC<EmptyStateProps> = ({ onGoToSettings }) => {
+  const isConfigured = ConfigService.isConfigured();
+
+  if (!isConfigured) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 bg-white rounded-lg shadow-lg text-center">
+        <Settings className="w-16 h-16 text-gray-400 mb-4" />
+        <h2 className="text-2xl font-bold mb-2">Configuration Required</h2>
+        
+        <p className="text-gray-600 mb-6 max-w-md">
+          Please configure your GitHub repository and access token to start managing issues.
+        </p>
+        
+        {onGoToSettings && (
+          <button
+            onClick={onGoToSettings}
+            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+          >
+            <Settings className="w-5 h-5" />
+            Open Settings
+          </button>
+        )}
+        
+        <div className="mt-6 text-sm text-gray-500 max-w-md">
+          You'll need a GitHub Personal Access Token with 'repo' scope to access your repository's issues.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] p-8 bg-white rounded-lg shadow-lg text-center">

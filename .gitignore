@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Internal planning and setup documents
+MULTI_USER_PLAN.md
+SLACK_SETUP.md
