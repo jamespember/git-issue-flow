@@ -6,9 +6,16 @@ Made by [James Pember](https://jamespember.com)
 
 ## 🚀 Quick Start
 
+### Prerequisites
+- **Node.js** (v18 or higher)
+- **npm** or **yarn** 
+- **GitHub Personal Access Token** with `repo` scope
+
+### Basic Setup
+
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/github-groomer.git
+   git clone https://github.com/jamespember/github-groomer.git
    cd github-groomer
    ```
 
@@ -21,16 +28,46 @@ Made by [James Pember](https://jamespember.com)
    ```bash
    npm run dev
    ```
+   The app will open at `http://localhost:5173`
 
-4. **Configure your repository**
-   - Open the app and click on the **Settings** tab
-   - Enter your GitHub repository details and personal access token
-   - Customize your priority labels and workflow preferences
+4. **Configure your first repository**
+   - Click the **Settings** tab in the app
+   - Enter your **GitHub repository** (owner/repo format)
+   - Add your **GitHub Personal Access Token** 
+   - Customize **priority labels** to match your workflow
    - Save your configuration
 
-5. **Start grooming**
-   - Press `⌘K` or `Ctrl+K` to search for issues
+5. **Start grooming issues**
+   - Press `⌘K` or `Ctrl+K` to open the search interface
+   - Use GitHub search syntax to find issues
    - Review, prioritize, and manage your backlog efficiently
+
+### Optional Integrations
+
+#### Slack Thread Previews (Optional)
+To enable Slack thread previews with AI summaries:
+
+1. **Create a Slack App** in your workspace
+2. **Add bot token scopes**: `channels:history`, `channels:read`, `users:read`
+3. **Install the app** and invite the bot to relevant channels
+4. **Start the proxy server**:
+   ```bash
+   node slack-proxy.cjs
+   ```
+   This runs a local proxy on port 3001 for secure Slack API calls
+5. **Add your Slack bot token** in Settings > Integrations
+
+#### OpenAI Integration (Optional)
+For AI-powered issue formatting and Slack thread summaries:
+
+1. **Get an OpenAI API key** from your dashboard
+2. **Add the API key** in Settings > Integrations
+
+### No Configuration Files Required! 
+✅ All configuration is stored in your browser's localStorage  
+✅ No `.env` files to create  
+✅ No database setup needed  
+✅ Works entirely locally
 
 ## ✨ Features
 
@@ -105,6 +142,34 @@ Made by [James Pember](https://jamespember.com)
 - **No tracking**: No analytics, no telemetry, no external dependencies beyond GitHub API
 - **Open source**: Full transparency, inspect and modify all code
 - **Secure defaults**: Tokens masked in UI, export function redacts sensitive data
+
+## 🛠️ Troubleshooting
+
+### Common Issues
+
+**"GitHub authentication failed"**
+- Verify your Personal Access Token is correct and hasn't expired
+- Ensure the token has `repo` scope (and `read:org` for organization repos)
+- Check that the repository owner/name is correct
+
+**"Repository not found"** 
+- Confirm the repository exists and you have access
+- For private repos, ensure your token has appropriate permissions
+- Check the owner/repo format (e.g., `facebook/react`)
+
+**"No issues found"**
+- Try a simpler search query like `is:open is:issue`
+- Check if your exclude filters are too restrictive in Settings
+- Verify the repository has open issues
+
+**Slack previews not working**
+- Ensure `slack-proxy.cjs` is running on port 3001
+- Check that your Slack bot is in the relevant channels
+- Verify the bot token has the required scopes
+
+**Port already in use**
+- If port 5173 is busy, Vite will automatically try the next available port
+- For the Slack proxy, you can modify the port in `slack-proxy.cjs`
 
 ### Development Setup
 
