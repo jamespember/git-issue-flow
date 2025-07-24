@@ -144,15 +144,26 @@ const Settings: React.FC = () => {
     });
   };
 
-  // Label selection components
-  const LabelDropdown: React.FC<{
+  // Single label selection component (for priority labels)
+  const SingleLabelSelect: React.FC<{
     value: string;
     onChange: (value: string) => void;
     placeholder: string;
     disabled?: boolean;
   }> = ({ value, onChange, placeholder, disabled }) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [searchTerm, setSearchTerm] = useState('');
+    
     const selectedLabel = availableLabels.find(label => label.name === value);
+    const filteredLabels = availableLabels.filter(label => 
+      label.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    
+    const selectLabel = (labelName: string) => {
+      onChange(labelName);
+      setSearchTerm('');
+      setIsOpen(false);
+    };
     
     return (
       <div className="relative">
@@ -160,7 +171,7 @@ const Settings: React.FC = () => {
           type="button"
           onClick={() => !disabled && setIsOpen(!isOpen)}
           disabled={disabled}
-          className="w-full px-3 py-2 text-left border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-between"
+          className="w-full px-3 py-2 text-left border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-between bg-white"
         >
           <div className="flex items-center gap-2">
             {selectedLabel && (
@@ -169,59 +180,69 @@ const Settings: React.FC = () => {
                 style={{ backgroundColor: `#${selectedLabel.color}` }}
               />
             )}
-            <span className={selectedLabel ? 'text-gray-900' : 'text-gray-500'}>
+            <span className={selectedLabel ? 'text-gray-900 font-medium' : 'text-gray-500'}>
               {selectedLabel ? selectedLabel.name : placeholder}
             </span>
           </div>
-          <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+          <ChevronDown className={`w-4 h-4 text-gray-400 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
         </button>
         
         {isOpen && !disabled && (
           <div 
-            className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-auto"
+            className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="p-2">
+            <div className="p-3 border-b border-gray-200 bg-gray-50">
               <input
                 type="text"
                 placeholder="Search GitHub labels..."
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
-                className="w-full px-2 py-1 text-sm border border-gray-200 rounded focus:ring-1 focus:ring-blue-500 focus:border-transparent"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 onClick={(e) => e.stopPropagation()}
+                className="w-full px-3 py-2 text-sm border border-gray-200 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-colors"
+                onKeyDown={(e) => {
+                  if (e.key === 'Escape') {
+                    if (searchTerm.trim()) {
+                      setSearchTerm('');
+                    } else {
+                      setIsOpen(false);
+                    }
+                    return;
+                  }
+                  if (e.key === 'Enter' && filteredLabels.length > 0) {
+                    e.preventDefault();
+                    selectLabel(filteredLabels[0].name);
+                  }
+                }}
+                autoFocus
               />
             </div>
-            <div className="border-t border-gray-200">
-              {availableLabels
-                .filter(label => label.name.toLowerCase().includes(value.toLowerCase()))
-                .map(label => (
+            <div className="max-h-48 overflow-y-auto">
+              {filteredLabels.length > 0 ? (
+                filteredLabels.map(label => (
                   <button
                     key={label.id}
-                    onClick={() => {
-                      onChange(label.name);
-                      setIsOpen(false);
-                    }}
-                    className="w-full px-3 py-2 text-left hover:bg-gray-50 flex items-center gap-2"
+                    onClick={() => selectLabel(label.name)}
+                    className="w-full px-3 py-2 text-left hover:bg-blue-50 flex items-center gap-3 transition-colors duration-150 border-b border-gray-100 last:border-b-0"
                   >
                     <span 
                       className="w-3 h-3 rounded-full flex-shrink-0" 
                       style={{ backgroundColor: `#${label.color}` }}
                     />
-                    <span>{label.name}</span>
+                    <span className="font-medium text-gray-900">{label.name}</span>
                   </button>
                 ))
-              }
-              {availableLabels.filter(label => label.name.toLowerCase().includes(value.toLowerCase())).length === 0 && (
-                <div className="px-3 py-2 text-sm text-center text-gray-500">
-                  {value ? (
+              ) : (
+                <div className="px-3 py-4 text-sm text-center text-gray-500">
+                  {searchTerm ? (
                     <>
-                      <div className="mb-1">No labels found matching "{value}"</div>
+                      <div className="mb-2">No labels found matching "{searchTerm}"</div>
                       <div className="text-xs text-gray-400">Only existing GitHub labels can be selected</div>
                     </>
                   ) : (
                     availableLabels.length === 0 ? (
                       <>
-                        <div className="mb-1">No GitHub labels available</div>
+                        <div className="mb-2">No GitHub labels available</div>
                         <div className="text-xs text-gray-400">Make sure your GitHub token has access to the repository</div>
                       </>
                     ) : (
@@ -752,7 +773,7 @@ const Settings: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">High Priority</label>
-                <LabelDropdown
+                <SingleLabelSelect
                   value={config.labels.priority.high}
                   onChange={(value) => setConfig({
                     ...config, 
@@ -765,7 +786,7 @@ const Settings: React.FC = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Medium Priority</label>
-                <LabelDropdown
+                <SingleLabelSelect
                   value={config.labels.priority.medium}
                   onChange={(value) => setConfig({
                     ...config, 
@@ -778,7 +799,7 @@ const Settings: React.FC = () => {
               
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">Low Priority</label>
-                <LabelDropdown
+                <SingleLabelSelect
                   value={config.labels.priority.low}
                   onChange={(value) => setConfig({
                     ...config, 
