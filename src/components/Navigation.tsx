@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { Activity, Target, RefreshCw, Settings } from 'lucide-react';
+import { Activity, Target, RefreshCw, Settings, HelpCircle } from 'lucide-react';
 import { useAppStore } from '../store/appStore';
 // import { LocaleSwitcher } from "lingo.dev/react/client";
 
 interface NavigationProps {
   currentView: 'grooming' | 'health' | 'settings';
   onViewChange: (view: 'grooming' | 'health' | 'settings') => void;
+  onHelpClick: () => void;
 }
 
-const Navigation: React.FC<NavigationProps> = ({ currentView, onViewChange }) => {
+const Navigation: React.FC<NavigationProps> = ({ currentView, onViewChange, onHelpClick }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [refreshFeedback, setRefreshFeedback] = useState<string | null>(null);
   const { issues, refreshIssues } = useAppStore();
@@ -69,6 +70,15 @@ const Navigation: React.FC<NavigationProps> = ({ currentView, onViewChange }) =>
           >
             <RefreshCw className={`w-4 h-4 ${isRefreshing ? 'animate-spin' : ''}`} />
             <span>Refresh</span>
+          </button>
+
+          <button
+            onClick={onHelpClick}
+            className="flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors bg-gray-50 text-gray-600 hover:bg-gray-100 hover:text-gray-900"
+            title="Documentation & Help"
+          >
+            <HelpCircle className="w-4 h-4" />
+            <span>Help</span>
           </button>
           
           <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
