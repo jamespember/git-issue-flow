@@ -9,6 +9,8 @@ import { ChevronLeft, ChevronRight, ChevronDown, Check, Clock, Calendar, X, Mess
 import { useAppStore } from '../store/appStore';
 import { aiService } from '../services/aiService';
 import { ConfigService } from '../services/configService';
+import { useKeyboardShortcuts } from '../hooks/useKeyboardShortcuts';
+import { useIssueActions } from '../hooks/useIssueActions';
 
 type IssueViewerProps = {
   issue: GitHubIssue;
@@ -36,10 +38,10 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
   const [rewriteResult, setRewriteResult] = useState('');
   const [rewriteLoading, setRewriteLoading] = useState(false);
   const [refreshStatus, setRefreshStatus] = useState<'idle' | 'refreshing' | 'completed'>('idle');
-  const [showSlackPreview, setShowSlackPreview] = useState(false);
-  const [currentSlackUrl, setCurrentSlackUrl] = useState<string>('');
+  const [showSlackPreview] = useState(false);
+  const [currentSlackUrl] = useState<string>('');
   
-  const { nextIssue, prevIssue, setPriority, issues, currentIssueIndex, closeIssueAsNotPlanned, refreshIssues } = useAppStore();
+  const { nextIssue, prevIssue, issues, currentIssueIndex } = useAppStore();
   const updateTitle = useAppStore(s => s.updateIssueTitle);
   
   useEffect(() => {
@@ -50,6 +52,13 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
     setEditTitleMode(false);
   }, [issue]);
   
+  const getSlackUrls = () => {
+    if (!issue) return [];
+    const slackUrlRegex = /https?:\/\/[^.\s]*\.?slack\.com\/[^\s)]+/gi;
+    const content = `${issue.title} ${issue.body}`;
+    return content.match(slackUrlRegex) || [];
+  };
+
   const getPriority = () => {
     if (!issue) return undefined;
     const config = ConfigService.load();
@@ -62,107 +71,39 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
   const priority = getPriority();
   
   const hasUnsavedChanges = markdownContent !== issue?.body;
+
+  // Custom hooks for actions and keyboard shortcuts
+  const issueActions = useIssueActions({
+    issueNumber: issue?.number,
+    issueHtmlUrl: issue?.html_url,
+    markdownContent,
+    hasUnsavedChanges,
+    priority,
+    setEditMode,
+    setMarkdownContent,
+    setShowUnsavedDialog,
+    setRefreshStatus,
+    getSlackUrls
+  });
+
+  useKeyboardShortcuts({
+    editMode,
+    hasUnsavedChanges,
+    priority,
+    issueNumber: issue?.number,
+    onSetEditMode: setEditMode,
+    onSave: issueActions.saveContent,
+    onCancel: issueActions.cancelEdit,
+    onMarkComplete: issueActions.markComplete,
+    onOpenInGitHub: issueActions.openInGitHub,
+    onSetPriority: issueActions.handleSetPriority,
+    onCloseAsNotPlanned: issueActions.closeAsNotPlanned,
+    onRefreshIssues: issueActions.handleRefreshIssues,
+    onOpenFirstSlackLink: issueActions.openFirstSlackLink,
+    onShowUnsavedDialog: () => setShowUnsavedDialog(true),
+    onSetPendingAction: setPendingAction
+  });
   
-  // Global keyboard shortcuts
-  useEffect(() => {
-    if (!issue) return;
-    const handleGlobalKeyDown = (e: KeyboardEvent) => {
-      // Skip if user is typing in an input field
-      const target = e.target as HTMLElement;
-      if (target && (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.contentEditable === 'true')) {
-        return;
-      }
-
-      // Uncomment for debugging keyboard events
-      // console.log('Key pressed:', e.key, { ctrl: e.ctrlKey, shift: e.shiftKey, alt: e.altKey });
-
-      if (e.ctrlKey && e.key === 'e') {
-        console.log('Ctrl+E detected, setting edit mode');
-        e.preventDefault();
-        setEditMode(true);
-      } else if (e.ctrlKey && e.key === 's' && editMode) {
-        console.log('Ctrl+S detected, saving markdown');
-        e.preventDefault();
-        useAppStore.getState().updateIssueBody(markdownContent);
-        setEditMode(false);
-      } else if (e.key === 'Escape' && editMode) {
-        // Escape should cancel edit mode, like the Cancel button
-        if (hasUnsavedChanges) {
-          setShowUnsavedDialog(true);
-        } else {
-          setEditMode(false);
-          setMarkdownContent(issue.body);
-        }
-      } else if (e.ctrlKey && e.key === 'c') {
-        if (!priority) {
-          console.log('Ctrl+C detected, but no priority selected. Action blocked.');
-          return;
-        }
-        console.log('Ctrl+C detected, marking as complete');
-        e.preventDefault();
-        useAppStore.getState().markIssueComplete(issue.number);
-      } else if (e.ctrlKey && e.key === 'o') {
-        console.log('Ctrl+O detected, opening issue on GitHub');
-        e.preventDefault();
-        window.open(issue.html_url, '_blank', 'noopener,noreferrer');
-      } else if (e.ctrlKey && e.key === 'h') {
-        // Ctrl+H sets high priority
-        if (editMode && hasUnsavedChanges) {
-          setShowUnsavedDialog(true);
-          setPendingAction({ type: 'setPriority', value: 'high' });
-        } else {
-          setPriority(issue.number, 'high');
-        }
-      } else if (e.ctrlKey && e.key === 'm') {
-        // Ctrl+M sets medium priority
-        if (editMode && hasUnsavedChanges) {
-          setShowUnsavedDialog(true);
-          setPendingAction({ type: 'setPriority', value: 'medium' });
-        } else {
-          setPriority(issue.number, 'medium');
-        }
-      } else if (e.ctrlKey && e.key === 'l') {
-        // Ctrl+L sets low priority
-        if (editMode && hasUnsavedChanges) {
-          setShowUnsavedDialog(true);
-          setPendingAction({ type: 'setPriority', value: 'low' });
-        } else {
-          setPriority(issue.number, 'low');
-        }
-      } else if (e.ctrlKey && e.key === 'x') {
-        // Ctrl+X closes issue as not planned
-        console.log('Ctrl+X detected, closing as not planned');
-        e.preventDefault();
-        closeIssueAsNotPlanned(issue.number);
-      } else if (e.ctrlKey && e.shiftKey && e.key === 'R') {
-        // Ctrl+Shift+R refreshes all issues
-        console.log('Ctrl+Shift+R detected, refreshing issues');
-        e.preventDefault();
-        
-        setRefreshStatus('refreshing');
-        refreshIssues().then((result) => {
-          console.log('Refresh completed:', result);
-          setRefreshStatus('completed');
-          // Reset status after showing completion
-          setTimeout(() => setRefreshStatus('idle'), 2000);
-        }).catch((error) => {
-          console.error('Refresh failed:', error);
-          setRefreshStatus('idle');
-        });
-      } else if (e.ctrlKey && e.shiftKey && e.key === 'S') {
-        // Ctrl+Shift+S opens first Slack link
-        console.log('Ctrl+Shift+S detected, opening Slack link');
-        e.preventDefault();
-        openFirstSlackLink();
-      }
-    };
-    console.log('Adding keyboard event listener');
-    window.addEventListener('keydown', handleGlobalKeyDown);
-    return () => {
-      console.log('Removing keyboard event listener');
-      window.removeEventListener('keydown', handleGlobalKeyDown);
-    };
-  }, [editMode, markdownContent, priority, issue?.number, issue?.html_url, setEditMode, setPriority, refreshIssues]);
   
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -190,11 +131,9 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
   };
 
   const handleDialogSave = () => {
-    useAppStore.getState().updateIssueBody(markdownContent);
-    setEditMode(false);
-    setShowUnsavedDialog(false);
+    issueActions.saveWithDialog();
     if (pendingAction && pendingAction.type === 'setPriority') {
-      setPriority(issue.number, pendingAction.value);
+      issueActions.handleSetPriority(pendingAction.value);
     }
     setPendingAction(null);
   };
@@ -203,7 +142,7 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
     setMarkdownContent(issue.body);
     setShowUnsavedDialog(false);
     if (pendingAction && pendingAction.type === 'setPriority') {
-      setPriority(issue.number, pendingAction.value);
+      issueActions.handleSetPriority(pendingAction.value);
     }
     setPendingAction(null);
   };
@@ -285,21 +224,7 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
     setShowRewriteModal(false);
   };
 
-  // Extract Slack URLs from issue content
-  const getSlackUrls = () => {
-    if (!issue) return [];
-    const slackUrlRegex = /https?:\/\/[^.\s]*\.?slack\.com\/[^\s)]+/gi;
-    const content = `${issue.title} ${issue.body}`;
-    return content.match(slackUrlRegex) || [];
-  };
 
-  const openFirstSlackLink = () => {
-    const slackUrls = getSlackUrls();
-    if (slackUrls.length > 0) {
-      setCurrentSlackUrl(slackUrls[0]);
-      setShowSlackPreview(true);
-    }
-  };
   
   if (!issue) return null;
 
@@ -639,7 +564,7 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
               <button 
                 onClick={() => {
                   if (!priority) return;
-                  useAppStore.getState().markIssueComplete(issue.number);
+                  issueActions.markComplete();
                 }}
                 className={`px-4 py-2 text-sm rounded-md flex items-center justify-center gap-2 transition-colors bg-green-500 text-white hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700${!priority ? ' opacity-50 cursor-not-allowed' : ''}`}
                 disabled={!priority}
@@ -699,7 +624,7 @@ const IssueViewer: React.FC<IssueViewerProps> = ({
         <SlackThreadPreview
           url={currentSlackUrl}
           isVisible={showSlackPreview}
-          onClose={() => setShowSlackPreview(false)}
+          onClose={() => {}}
           appendToIssueMarkdown={(content: string) => {
             // Add Slack context to the current markdown
             const contextSection = `\n\n## Context from Slack thread\n\n${content}`;

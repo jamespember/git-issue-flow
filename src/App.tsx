@@ -9,10 +9,12 @@ import EmptyState from './components/EmptyState';
 import CommandK from './components/CommandK';
 import Settings from './components/Settings';
 import ConfigurationBanner from './components/ConfigurationBanner';
+import DocumentationViewer from './components/DocumentationViewer';
 
 function App() {
   const [isCommandKOpen, setIsCommandKOpen] = useState(false);
   const [currentView, setCurrentView] = useState<'grooming' | 'health' | 'settings'>('grooming');
+  const [showDocumentation, setShowDocumentation] = useState(false);
   
   const { 
     issues, 
@@ -43,9 +45,17 @@ function App() {
     };
   }, []);
 
+  if (showDocumentation) {
+    return <DocumentationViewer onBack={() => setShowDocumentation(false)} />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 text-gray-900">
-      <Navigation currentView={currentView} onViewChange={setCurrentView} />
+      <Navigation 
+        currentView={currentView} 
+        onViewChange={setCurrentView}
+        onHelpClick={() => setShowDocumentation(true)}
+      />
       
       <main className="flex-1">
         {currentView === 'health' ? (
