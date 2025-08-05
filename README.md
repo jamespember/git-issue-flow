@@ -4,6 +4,24 @@ Fast, keyboard-driven GitHub issue management tool for efficient backlog groomin
 
 Made by [James Pember](https://jamespember.com)
 
+## Screenshots
+
+Easily fetch issues from Github using search syntax
+
+<img width="1383" height="1324" alt="image" src="https://github.com/user-attachments/assets/db718b3d-7886-42b9-b551-4fb71bd4da44" />
+
+Quicky move through issues, add labels, edit and save updates using keyboard shortuts 
+
+<img width="3044" height="1772" alt="image" src="https://github.com/user-attachments/assets/9dddf30f-fa81-4247-aea3-3bd29accfef1" />
+
+Enter an OpenAI API key to format or rewrite issues with AI
+
+<img width="3020" height="1658" alt="image" src="https://github.com/user-attachments/assets/9525e082-8397-4c30-a605-d8b47f82ab27" />
+
+Keep tabs on your backlogs health, and make sure you're grooming issues faster than they're coming in 
+
+<img width="3856" height="1958" alt="image" src="https://github.com/user-attachments/assets/997da8e6-a80f-49ad-9367-4a5be22ad039" />
+
 ## Quick Start
 
 ```bash
